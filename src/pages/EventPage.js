@@ -1,9 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import {axiosRequest} from '../api/axiosDefaults';
 
 function EventPage() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    axiosRequest.get('/events/') 
+      .then((response) => {
+        console.log(response.data)
+        setEvents(response.data); 
+      })
+      .catch((error) => {
+        console.error('Error fetching events:', error);
+      });
+  }, []);
+
   return (
-    <div>EventPage</div>
-  )
+    <div>
+      <h1>Event List</h1>
+      <ul>
+        {events.map((event) => (
+          <li key={event.id}>
+            <Link to={`/events/${event.id}`}>{event.title}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-export default EventPage
+export default EventPage;
