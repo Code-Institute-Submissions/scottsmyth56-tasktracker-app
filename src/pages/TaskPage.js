@@ -1,14 +1,14 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {axiosRequest} from '../api/axiosDefaults';
 
 function TaskPage() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/tasks/') 
+    axiosRequest.get('/tasks/') 
       .then((response) => {
-
+        console.log(response.data)
         setTasks(response.data); 
       })
       .catch((error) => {
