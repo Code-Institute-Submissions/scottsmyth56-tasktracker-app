@@ -8,6 +8,7 @@ const authToken = localStorage.getItem('authToken');
 
 if (authToken) {
   axios.defaults.headers.common['Authorization'] = `Token ${authToken}`;
+  console.log("using Token")
 }
 
 //REMOVE Line 

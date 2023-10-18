@@ -9,7 +9,8 @@ function TaskPage() {
   const history = useNavigate();
 
   function handleLogout() {
-    localStorage.removeItem('authToken');    
+    localStorage.removeItem('authToken');
+    console.log("logged out" + localStorage.getItem('authToken')); 
     history('/login'); 
   }
 
@@ -37,8 +38,9 @@ function TaskPage() {
       </ul>
       <h2>Welcome, {currentUser?.username || 'Guest'}</h2>
        <button onClick={handleLogout}>Logout</button> 
-
-
+       <Link to="/register">
+      <button> Register</button>
+      </Link>
 
     </div>
   );
