@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {axiosRequest} from '../../api/axiosDefaults';
-
+import { useCurrentUser } from '../../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
 function TaskPage() {
   const [tasks, setTasks] = useState([]);
+  const currentUser = useCurrentUser();
+  const history = useNavigate();
+
+  function handleLogout() {
+    localStorage.removeItem('authToken');    
+    history('/login'); 
+  }
+
 
   useEffect(() => {
     axiosRequest.get('/tasks/') 
@@ -26,6 +35,11 @@ function TaskPage() {
           </li>
         ))}
       </ul>
+      <h2>Welcome, {currentUser?.username || 'Guest'}</h2>
+       <button onClick={handleLogout}>Logout</button> 
+
+
+
     </div>
   );
 }

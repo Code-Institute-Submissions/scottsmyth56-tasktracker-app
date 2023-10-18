@@ -23,6 +23,10 @@ function LoginForm() {
             .then((response) => {
 
                 console.log('Login successful:', response.data);
+                
+                localStorage.setItem('authToken', response.data.key);
+                //remove line below
+                console.log(localStorage.getItem('authToken'));
                 history('/events');
             })
             .catch((error) => {
