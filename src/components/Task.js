@@ -32,7 +32,9 @@ function Task() {
       <p>Description: {task.description}</p>
       <p>Due Date: {task.due_date}</p>
       <p>Priority: {task.priority}</p>
-    </div>
+      <p>Image:</p>
+          <img src={task.image}  />
+        </div>
   );
 }
 
