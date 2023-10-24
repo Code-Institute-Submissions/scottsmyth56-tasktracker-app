@@ -8,7 +8,7 @@ import Event from "./components/Event";
 import LoginForm from "./pages/auth/LoginForm";
 import { CurrentUserProvider } from "./contexts/UserContext";
 import RegisterForm from "./pages/auth/RegisterForm";
-
+import CreateTaskForm from "./pages/tasks/CreateTaskForm";
 function App() {
   return (
     <CurrentUserProvider>
@@ -22,6 +22,7 @@ function App() {
             <Route path="/events/:eventId" element={<Event />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
+            <Route path="/createTask" element={<CreateTaskForm />} />
           </Routes>
         </div>
       </Router>

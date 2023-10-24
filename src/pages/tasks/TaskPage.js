@@ -41,7 +41,9 @@ function TaskPage() {
        <Link to="/register">
       <button> Register</button>
       </Link>
-
+      <Link to="/createTask">
+      <button>Create Task + </button>
+      </Link>
     </div>
   );
 }
