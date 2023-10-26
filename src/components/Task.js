@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { axiosRequest } from "../api/axiosDefaults"
 import SpinnerButton from './Spinner';
 import { Link } from 'react-router-dom';
+import DeleteTaskModal from './DeleteTaskModal';
 
 
 function Task() {
@@ -35,14 +36,15 @@ function Task() {
       <p>Due Date: {task.due_date}</p>
       <p>Priority: {task.priority}</p>
       <p>Image:</p>
-      <img src={task.image} alt='task '/>
+      <img src={task.image} alt='task ' />
 
       <Link to={`/editTask/${task.id}`}>
         <button>Edit Task  </button>
       </Link>
-      <Link to="/deleteTask">
-        <button>Delete Task + </button>
-      </Link></div>
+      <DeleteTaskModal taskId={taskId} />
+    </div>
+
+
   );
 }
 
