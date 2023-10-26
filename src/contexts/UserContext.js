@@ -16,7 +16,7 @@ export const CurrentUserProvider = ({ children }) => {
     try {
       const { data } = await axiosRequest.get("/auth/user/");
       setCurrentUser(data);
-      console.log(data);
+      // console.log(data);
     } catch (err) {
      console.error(err);
     }

@@ -18,7 +18,7 @@ function TaskPage() {
   useEffect(() => {
     axiosRequest.get('/tasks/') 
       .then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         setTasks(response.data); 
       })
       .catch((error) => {
