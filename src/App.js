@@ -11,6 +11,9 @@ import RegisterForm from "./pages/auth/RegisterForm";
 import CreateTaskForm from "./pages/tasks/CreateTaskForm";
 import CreateEventForm from "./pages/events/CreateEventForm";
 import EditTask from "./pages/tasks/EditTaskForm";
+import EditEvent from "./pages/events/EditEventForm";
+
+
 function App() {
   return (
     <CurrentUserProvider>
@@ -27,6 +30,8 @@ function App() {
             <Route path="/createTask" element={<CreateTaskForm />} />
             <Route path="/editTask/:taskId" element={<EditTask />} />
             <Route path="/createEvent" element={<CreateEventForm />} />
+            <Route path="/editEvent/:eventId" element={<EditEvent />} />
+
 
           </Routes>
         </div>

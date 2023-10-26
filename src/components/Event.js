@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { axiosRequest } from "../api/axiosDefaults"
 import SpinnerButton from './Spinner';
 
@@ -32,7 +32,12 @@ function Event() {
       <p>Description: {event.description}</p>
       <p> Date: {event.date}</p>
       <p>location: {event.location}</p>
+      <Link to={`/editEvent/${event.id}`}>
+        <button>Edit Task  </button>
+      </Link>
+      {/* <DeleteTaskModal taskId={taskId} /> */}
     </div>
+    
   );
 }
 
