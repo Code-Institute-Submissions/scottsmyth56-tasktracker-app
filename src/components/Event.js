@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { axiosRequest } from "../api/axiosDefaults"
 import SpinnerButton from './Spinner';
+import DeleteEventModal from './DeleteEventModal';
 
 function Event() {
   const { eventId } = useParams();
@@ -35,7 +36,7 @@ function Event() {
       <Link to={`/editEvent/${event.id}`}>
         <button>Edit Task  </button>
       </Link>
-      {/* <DeleteTaskModal taskId={taskId} /> */}
+      <DeleteEventModal eventId={eventId} />
     </div>
     
   );
