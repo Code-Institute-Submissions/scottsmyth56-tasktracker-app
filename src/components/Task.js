@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { axiosRequest } from "../api/axiosDefaults"
+import { axiosRequest } from "../api/axiosDefaults";
 import SpinnerButton from './Spinner';
 import { Link } from 'react-router-dom';
 import DeleteTaskModal from './DeleteTaskModal';
-
+import UserSearch from './UserSearch';  // Import UserSearch
 
 function Task() {
   const { taskId } = useParams();
@@ -14,7 +14,6 @@ function Task() {
   useEffect(() => {
     axiosRequest.get(`/tasks/${taskId}/`)
       .then((response) => {
-        // console.log(response.data)
         setTask(response.data);
         setLoading(false);
       })
@@ -23,11 +22,15 @@ function Task() {
       });
   }, [taskId]);
 
+  const handleUserSelect = (user) => {
+    //  need to update the tasks shared users field to include the invitd user
+    console.log(" test Inviting user to task:", user.username);
+    
+  };
 
   if (loading) {
     return <SpinnerButton />;
   }
-
 
   return (
     <div>
@@ -36,15 +39,19 @@ function Task() {
       <p>Due Date: {task.due_date}</p>
       <p>Priority: {task.priority}</p>
       <p>Image:</p>
-      <img src={task.image} alt='task ' />
+      {task.image && <img src={task.image} alt="Task" />}
 
       <Link to={`/editTask/${task.id}`}>
-        <button>Edit Task  </button>
+        <button>Edit Task</button>
       </Link>
       <DeleteTaskModal taskId={taskId} />
+
+    
+      <div>
+        <h3>Invite Users to View Task</h3>
+        <UserSearch onSelectUser={handleUserSelect} />
+      </div>
     </div>
-
-
   );
 }
 
