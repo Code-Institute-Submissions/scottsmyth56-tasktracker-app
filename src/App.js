@@ -12,6 +12,7 @@ import CreateTaskForm from "./pages/tasks/CreateTaskForm";
 import CreateEventForm from "./pages/events/CreateEventForm";
 import EditTask from "./pages/tasks/EditTaskForm";
 import EditEvent from "./pages/events/EditEventForm";
+import { ToastContainer } from 'react-toastify';
 
 
 function App() {
@@ -34,8 +35,10 @@ function App() {
 
 
           </Routes>
+
         </div>
       </Router>
+      <ToastContainer />
     </CurrentUserProvider>
   );
 }

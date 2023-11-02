@@ -4,7 +4,7 @@ import { ListGroup, Spinner } from 'react-bootstrap';
 import debounce from 'lodash.debounce';
 import SpinnerButton from './Spinner';
 
-function UserSearch({ onSelectUser }) { // Added onSelectUser prop
+function UserSearch({ onSelectUser }) { 
   const [searchTerm, setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -51,8 +51,8 @@ function UserSearch({ onSelectUser }) { // Added onSelectUser prop
       {loading && <SpinnerButton />}
       <ListGroup>
         {users.map(user => (
-          <ListGroup.Item key={user.id} onClick={() => onSelectUser(user)}>
-            {user.username}
+          <ListGroup.Item key={user.user_id} onClick={() => onSelectUser(user)}>
+            {user.username} {user.user_id}
           </ListGroup.Item>
         ))}
         {!loading && users.length === 0 && searchTerm && <p>No users found</p>}
