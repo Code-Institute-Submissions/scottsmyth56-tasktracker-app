@@ -6,7 +6,7 @@ import DeleteEventModal from "./DeleteEventModal";
 import UserSearch from "./UserSearch";
 import { useCurrentUser } from "../contexts/UserContext";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 
 function Event() {
   const currentUser = useCurrentUser();

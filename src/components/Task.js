@@ -4,7 +4,8 @@ import { axiosRequest } from "../api/axiosDefaults";
 import SpinnerButton from './Spinner';
 import { Link } from 'react-router-dom';
 import DeleteTaskModal from './DeleteTaskModal';
-import UserSearch from './UserSearch';  // Import UserSearch
+import UserSearch from './UserSearch'; 
+import { toast } from "react-toastify"; 
 
 function Task() {
   const { taskId } = useParams();
@@ -16,6 +17,7 @@ function Task() {
       .then((response) => {
         setTask(response.data);
         setLoading(false);
+        
       })
       .catch((error) => {
         console.error('Error fetching tasks:', error);
