@@ -5,9 +5,8 @@ import SpinnerButton from "./Spinner";
 import DeleteEventModal from "./DeleteEventModal";
 import UserSearch from "./UserSearch";
 import { useCurrentUser } from "../contexts/UserContext";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Event() {
   const currentUser = useCurrentUser();
@@ -42,20 +41,26 @@ function Event() {
       .post("events/invite/", postData)
       .then((response) => {
         console.log(response.data);
-        alert(`Invited ${user.username} to ${event.title}!`);
+        toast.success(`${user.username}, has been invited to this event`, {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 5000,
+        });
       })
       .catch((error) => {
         if (error.response && error.response.status === 400) {
-          toast.warning(`${user.username}, has already been invited to this event`, {
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 5000
-          })
+          toast.warning(
+            `${user.username}, has already been invited to this event`,
+            {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 5000,
+            }
+          );
         } else {
           console.error("Error inviting user:", error);
           toast.error(`Error inviting ${user.username} please try again!`, {
             position: toast.POSITION.TOP_CENTER,
-            autoClose: 5000
-          })
+            autoClose: 5000,
+          });
         }
       });
   };
