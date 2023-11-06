@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { axiosRequest } from '../api/axiosDefaults';
-import { ListGroup, Spinner } from 'react-bootstrap';
+import { ListGroup} from 'react-bootstrap';
 import debounce from 'lodash.debounce';
-import SpinnerButton from './Spinner';
+
 
 function UserSearch({ onSelectUser }) { 
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,7 +32,7 @@ function UserSearch({ onSelectUser }) {
     return () => {
       debouncedFetchUsers.cancel();
     };
-  }, []);
+  }, [debouncedFetchUsers]);
 
   const handleSearchChange = (e) => {
     const search = e.target.value;
@@ -48,7 +48,7 @@ function UserSearch({ onSelectUser }) {
         value={searchTerm}
         onChange={handleSearchChange}
       />
-      {loading && <SpinnerButton />}
+      
       <ListGroup>
         {users.map(user => (
           <ListGroup.Item key={user.user_id} onClick={() => onSelectUser(user)}>

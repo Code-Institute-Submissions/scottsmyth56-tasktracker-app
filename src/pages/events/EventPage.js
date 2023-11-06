@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { axiosRequest } from "../../api/axiosDefaults";
 import styles from "../../styles/EventPage.module.css";
 import { useCurrentUser } from "../../contexts/UserContext";
+import { Container, Row, Col, Button, Card, ListGroup } from 'react-bootstrap';
 
 function EventPage() {
   const [events, setEvents] = useState([]);
@@ -45,40 +46,45 @@ function EventPage() {
     console.log("declined");
   };
   return (
-    <div>
-      <div>
-        <h1>My Events</h1>
-        <ul>
-          {events.map((event) => (
-            <li key={event.id}>
-              <Link to={`/events/${event.id}`}>{event.title}</Link>
-            </li>
-          ))}
-        </ul>
-        <Link to="/createEvent">
-          <button>Create Event +</button>
-        </Link>
-      </div>
+    <Container fluid>
+      <Row>
+        <Col md={8}>
+          <h1>My Events</h1>
+          <ListGroup>
+            {events.map((event) => (
+              <ListGroup.Item key={event.id} action as={Link} to={`/events/${event.id}`}>
+                {event.title} {event.date} {event.time} {event.location}
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+          <Button as={Link} to="/createEvent" className="mt-3">
+            Create Event +
+          </Button>
+          <hr />
+          <h1>Accepted Events</h1>
+          
+        </Col>
 
-      <div>
-        <h1>Event Invitations</h1>
-        <ul>
-          {invitedEvents.map((invitation) => (
-            <li key={invitation.id}>
-              <p>{`${invitation.sender_username} has invited you to ${invitation.event_title}`}</p>
-              <div>
-                <button onClick={() => handleAccept(invitation.id)}>
-                  Accept
-                </button>
-                <button onClick={() => handleDecline(invitation.id)}>
-                  Decline
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+        <Col md={4}>
+          <Card>
+            <Card.Header as="h4">Event Invitations</Card.Header>
+            <ListGroup variant="flush">
+              {invitedEvents.map((invitation) => (
+                <ListGroup.Item key={invitation.id}>
+                  <p>{`${invitation.sender_username} has invited you to ${invitation.event_title}`}</p>
+                  <Button onClick={() => handleAccept(invitation.id)} size="sm" variant="success" className={styles["invite-btn"]}>
+                    Accept
+                  </Button>
+                  <Button onClick={() => handleDecline(invitation.id)} size="sm" variant="danger">
+                    Decline
+                  </Button>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
