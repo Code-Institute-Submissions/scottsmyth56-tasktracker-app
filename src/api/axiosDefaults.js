@@ -12,7 +12,7 @@ if (authToken) {
 }
 
 //REMOVE Line 
-// console.log(axios.defaults.headers.common['Authorization']) 
+ console.log(axios.defaults.headers.common['Authorization']) 
 
 
 

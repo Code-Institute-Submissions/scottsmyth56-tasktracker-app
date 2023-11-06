@@ -64,7 +64,7 @@ function TaskPage() {
         <Row>
           <Col xs={12} lg={8} className="task-list-section">
             <h1>My Tasks</h1>
-            <div className={styles['filter-div']}>
+            <div className={styles["filter-div"]}>
               <label>Status:</label>
               <select onChange={(e) => setStatusFilter(e.target.value)}>
                 <option value="all">All</option>
@@ -73,7 +73,7 @@ function TaskPage() {
                 <option value="done">Done</option>
               </select>
             </div>
-            <div className={styles['filter-div']}>
+            <div className={styles["filter-div"]}>
               <label>Priority:</label>
               <select onChange={(e) => setPriorityFilter(e.target.value)}>
                 <option value="all">All</option>
