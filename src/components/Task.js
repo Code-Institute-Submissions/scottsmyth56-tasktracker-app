@@ -60,6 +60,7 @@ function Task() {
   return (
     <div>
       <h1>{task.title}</h1>
+      <p>Owner: {task.owner_username}</p>
       <p>Description: {task.description}</p>
       <p>Due Date: {task.due_date}</p>
       <p>Priority: {task.priority}</p>
