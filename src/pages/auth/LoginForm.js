@@ -27,7 +27,7 @@ function LoginForm() {
                 localStorage.setItem('authToken', response.data.key);
                 //remove line below
                 console.log(localStorage.getItem('authToken'));
-                history('/events');
+                history('/');
             })
             .catch((error) => {
 

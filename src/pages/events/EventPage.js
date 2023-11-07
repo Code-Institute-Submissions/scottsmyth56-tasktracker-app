@@ -4,10 +4,12 @@ import { axiosRequest } from "../../api/axiosDefaults";
 import styles from "../../styles/EventPage.module.css";
 import { useCurrentUser } from "../../contexts/UserContext";
 import { Container, Row, Col, Button, Card, ListGroup } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 function EventPage() {
   const [events, setEvents] = useState([]);
   const [invitations, setInvitations] = useState([]);
+  const [acceptedEvents, setAcceptedEvents] = useState([]); 
   const currentUser = useCurrentUser();
 
   useEffect(() => {
@@ -39,7 +41,7 @@ function EventPage() {
   // console.log(invitedEvents);
 
   const handleAccept = async (invitationId) => {
-    console.log("accpeted ");
+
   };
 
   const handleDecline = async (invitationId) => {
@@ -80,6 +82,31 @@ function EventPage() {
           </Button>
           <hr />
           <h1>Accepted Events</h1>
+          <ListGroup>
+            {acceptedEvents.map((event) => (
+              <ListGroup.Item
+                key={event.id}
+                action
+                as={Link}
+                to={`/events/${event.id}`}
+              >
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5 className="mb-0">{event.title}</h5>
+                    <small className="text-muted">{event.location}</small>
+                  </div>
+                  <div className="text-end">
+                    <p className="mb-0">
+                      <small className="text-muted">Date: {event.date}</small>
+                    </p>
+                    <p className="mb-0">
+                      <small className="text-muted">Time: {event.time}</small>
+                    </p>
+                  </div>
+                </div>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
         </Col>
 
         <Col md={4}>
