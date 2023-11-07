@@ -71,6 +71,7 @@ function Event() {
 
   return (
     <div>
+      <p>event owner{event.owner_username}</p>
       <h1>{event.title}</h1>
       <p>Description: {event.description}</p>
       <p>Date: {event.date}</p>

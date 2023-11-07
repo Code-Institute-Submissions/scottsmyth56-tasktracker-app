@@ -9,39 +9,67 @@ import { toast } from "react-toastify";
 function EventPage() {
   const [events, setEvents] = useState([]);
   const [invitations, setInvitations] = useState([]);
-  const [acceptedEvents, setAcceptedEvents] = useState([]); 
+  const [acceptedEvents, setAcceptedEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); 
+
   const currentUser = useCurrentUser();
 
   useEffect(() => {
-    axiosRequest
-      .get("/events/")
-      .then((response) => {
-        console.log(response.data);
-        setEvents(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching events:", error);
-      });
+    const fetchEventsAndInvitations = async () => {
+      try {
+        const [eventsResponse, invitationsResponse] = await Promise.all([
+          axiosRequest.get("/events/"),
+          axiosRequest.get("/events/invite"),
+        ]);
+  
+        const eventsData = eventsResponse.data;
+        const invitationsData = invitationsResponse.data.filter(invite =>
+          !invite.accepted && invite.recipient_username === currentUser.username
+        );        const newAcceptedEvents = eventsData.filter(event =>
+          event.accepted_users && event.accepted_users.includes(currentUser.username)
+        );
 
-    axiosRequest
-      .get("/events/invite")
-      .then((response) => {
-        setInvitations(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching event invitations:", error);
-      });
-  }, []);
+        setAcceptedEvents(newAcceptedEvents);
+        setEvents(eventsData);
+        setInvitations(invitationsData);
+        setIsLoading(false); 
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        toast.error("An error occurred while fetching data.");
+        setIsLoading(false); 
+      }
+    };
+  
+    if (currentUser) {
+      fetchEventsAndInvitations();
+    }
+  }, [currentUser]);
 
-  const invitedEvents = invitations.filter(
-    (invitation) => invitation.recipient_username === currentUser?.username
-  );
-  // console.log(currentUser);
-  // console.log(invitedEvents);
 
   const handleAccept = async (invitationId) => {
-
+    try {
+      const response = await axiosRequest.post(`/event-invitations/${invitationId}/accept/`);
+      toast.success(response.data.message);
+  
+      setInvitations(currentInvitations =>
+        currentInvitations.filter(invitation => invitation.id !== invitationId)
+      );
+    } catch (error) {
+      console.error("Error accepting invitation:", error);
+      if (error.response) {
+        if (error.response.status === 401) {
+          toast.error("You need to be logged in to accept an invitation.");
+        } else if (error.response.status === 400) {
+          toast.error("This invitation has already been accepted.");
+        } else {
+          toast.error(
+            "An error occurred while trying to accept the invitation."
+          );
+        }
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
+    }
   };
 
   const handleDecline = async (invitationId) => {
@@ -113,7 +141,7 @@ function EventPage() {
           <Card>
             <Card.Header as="h4">Event Invitations</Card.Header>
             <ListGroup variant="flush">
-              {invitedEvents.map((invitation) => (
+              {invitations.map((invitation) => (
                 <ListGroup.Item key={invitation.id}>
                   <p>{`${invitation.sender_username} has invited you to ${invitation.event_title}`}</p>
                   <Button

@@ -32,7 +32,7 @@ function UserSearch({ onSelectUser }) {
     return () => {
       debouncedFetchUsers.cancel();
     };
-  }, [debouncedFetchUsers]);
+  }, []);
 
   const handleSearchChange = (e) => {
     const search = e.target.value;
