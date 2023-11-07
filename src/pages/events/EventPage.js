@@ -10,7 +10,7 @@ function EventPage() {
   const [events, setEvents] = useState([]);
   const [invitations, setInvitations] = useState([]);
   const [acceptedEvents, setAcceptedEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
 
   const currentUser = useCurrentUser();
 
@@ -21,38 +21,50 @@ function EventPage() {
           axiosRequest.get("/events/"),
           axiosRequest.get("/events/invite"),
         ]);
-  
+
         const eventsData = eventsResponse.data;
-        const invitationsData = invitationsResponse.data.filter(invite =>
-          !invite.accepted && invite.recipient_username === currentUser.username
-        );        const newAcceptedEvents = eventsData.filter(event =>
-          event.accepted_users && event.accepted_users.includes(currentUser.username)
+        const currentUserEvents = eventsData.filter(
+          (event) => event.owner_username === currentUser.username
+        );
+
+        const invitationsData = invitationsResponse.data.filter(
+          (invite) =>
+            !invite.accepted &&
+            invite.recipient_username === currentUser.username
+        );
+        const newAcceptedEvents = eventsData.filter(
+          (event) =>
+            event.accepted_users &&
+            event.accepted_users.includes(currentUser.username)
         );
 
         setAcceptedEvents(newAcceptedEvents);
-        setEvents(eventsData);
+        setEvents(currentUserEvents);
         setInvitations(invitationsData);
-        setIsLoading(false); 
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("An error occurred while fetching data.");
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
-  
+
     if (currentUser) {
       fetchEventsAndInvitations();
     }
   }, [currentUser]);
 
-
   const handleAccept = async (invitationId) => {
     try {
-      const response = await axiosRequest.post(`/event-invitations/${invitationId}/accept/`);
+      const response = await axiosRequest.post(
+        `/event-invitations/${invitationId}/accept/`
+      );
       toast.success(response.data.message);
-  
-      setInvitations(currentInvitations =>
-        currentInvitations.filter(invitation => invitation.id !== invitationId)
+
+      setInvitations((currentInvitations) =>
+        currentInvitations.filter(
+          (invitation) => invitation.id !== invitationId
+        )
       );
     } catch (error) {
       console.error("Error accepting invitation:", error);
@@ -73,8 +85,22 @@ function EventPage() {
   };
 
   const handleDecline = async (invitationId) => {
-    console.log("declined");
+    try {
+      const response = await axiosRequest.delete(
+        `/event-invitations/${invitationId}/`
+      );
+      toast.success("Invitation declined");
+
+      setInvitations((currentInvitations) =>
+        currentInvitations.filter(
+          (invitation) => invitation.id !== invitationId
+        )
+      );
+    } catch (error) {
+      console.error("Error declining invitation:", error);
+    }
   };
+
   return (
     <Container fluid>
       <Row>

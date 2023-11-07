@@ -15,10 +15,6 @@ function TaskPage() {
   const currentUser = useCurrentUser();
   const navigate = useNavigate();
 
-  // \console.log("currentUser", currentUser);
-
- 
-
   useEffect(() => {
     axiosRequest
       .get("/tasks/")
@@ -99,7 +95,7 @@ function TaskPage() {
                     key={task.id}
                     className={getPriorityColor(task.priority)}
                     onClick={() => handleRowClick(task.id)}
-                    style={{ cursor: "pointer" }} 
+                    style={{ cursor: "pointer" }}
                   >
                     <td>{task.title}</td>
                     <td>{format(new Date(task.due_date), "dd-MM-yyyy")}</td>
@@ -126,16 +122,16 @@ function TaskPage() {
               <tbody>
                 {sharedFilteredTasks.map((task) => (
                   <tr
-                  key={task.id}
-                  className={getPriorityColor(task.priority)}
-                  onClick={() => handleRowClick(task.id)}
-                  style={{ cursor: "pointer" }} 
-                >
-                  <td>{task.title}</td>
-                  <td>{format(new Date(task.due_date), "dd-MM-yyyy")}</td>
-                  <td>{task.priority}</td>
-                  <td>{task.status}</td>
-                </tr>
+                    key={task.id}
+                    className={getPriorityColor(task.priority)}
+                    onClick={() => handleRowClick(task.id)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <td>{task.title}</td>
+                    <td>{format(new Date(task.due_date), "dd-MM-yyyy")}</td>
+                    <td>{task.priority}</td>
+                    <td>{task.status}</td>
+                  </tr>
                 ))}
               </tbody>
             </Table>
@@ -144,7 +140,6 @@ function TaskPage() {
       </Container>
       <h1>Task List</h1>
 
-      
       <Link to="/register">
         <button>Register</button>
       </Link>
