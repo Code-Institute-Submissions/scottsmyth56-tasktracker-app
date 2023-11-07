@@ -13,13 +13,9 @@ function TaskPage() {
   const [priorityFilter, setPriorityFilter] = useState("all");
 
   const currentUser = useCurrentUser();
-  const history = useNavigate();
+  const navigate = useNavigate();
 
-  function handleLogout() {
-    localStorage.removeItem("authToken");
-    console.log("logged out" + localStorage.getItem("authToken"));
-    history("/login");
-  }
+ 
 
   useEffect(() => {
     axiosRequest
@@ -58,6 +54,10 @@ function TaskPage() {
     }
   };
 
+  const handleRowClick = (taskId) => {
+    navigate(`/tasks/${taskId}`);
+  };
+
   return (
     <div>
       <Container fluid>
@@ -93,10 +93,13 @@ function TaskPage() {
               </thead>
               <tbody>
                 {myFilteredTasks.map((task) => (
-                  <tr key={task.id} className={getPriorityColor(task.priority)}>
-                    <td>
-                      <Link to={`/tasks/${task.id}`}>{task.title}</Link>
-                    </td>
+                  <tr
+                    key={task.id}
+                    className={getPriorityColor(task.priority)}
+                    onClick={() => handleRowClick(task.id)}
+                    style={{ cursor: "pointer" }} 
+                  >
+                    <td>{task.title}</td>
                     <td>{format(new Date(task.due_date), "dd-MM-yyyy")}</td>
                     <td>{task.priority}</td>
                     <td>{task.status}</td>
@@ -120,14 +123,17 @@ function TaskPage() {
               </thead>
               <tbody>
                 {sharedFilteredTasks.map((task) => (
-                  <tr key={task.id} className={getPriorityColor(task.priority)}>
-                    <td>
-                      <Link to={`/tasks/${task.id}`}>{task.title}</Link>
-                    </td>
-                    <td>{format(new Date(task.due_date), "dd-MM-yyyy")}</td>
-                    <td>{task.priority}</td>
-                    <td>{task.status}</td>
-                  </tr>
+                  <tr
+                  key={task.id}
+                  className={getPriorityColor(task.priority)}
+                  onClick={() => handleRowClick(task.id)}
+                  style={{ cursor: "pointer" }} 
+                >
+                  <td>{task.title}</td>
+                  <td>{format(new Date(task.due_date), "dd-MM-yyyy")}</td>
+                  <td>{task.priority}</td>
+                  <td>{task.status}</td>
+                </tr>
                 ))}
               </tbody>
             </Table>
@@ -136,8 +142,7 @@ function TaskPage() {
       </Container>
       <h1>Task List</h1>
 
-      <h2>Welcome, {currentUser?.username || "Guest"}</h2>
-      <button onClick={handleLogout}>Logout</button>
+      
       <Link to="/register">
         <button>Register</button>
       </Link>
