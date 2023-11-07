@@ -61,6 +61,23 @@ function EventPage() {
       );
       toast.success(response.data.message);
 
+      const acceptedInvitation = invitations.find(
+        (invitation) => invitation.id === invitationId
+      );
+
+      // console.log("Accepted invitation:", acceptedInvitation);
+
+      const eventToAccept = events.find(
+        (event) => event.id === acceptedInvitation.event
+      );
+
+      console.log("Event accepted:", eventToAccept);
+
+      setAcceptedEvents((prevAcceptedEvents) => [
+        ...prevAcceptedEvents,
+        eventToAccept,
+      ]);
+
       setInvitations((currentInvitations) =>
         currentInvitations.filter(
           (invitation) => invitation.id !== invitationId
