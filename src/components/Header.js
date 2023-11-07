@@ -2,16 +2,19 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCurrentUser } from '../contexts/UserContext';
 import { Navbar, Nav, Button, Container } from 'react-bootstrap';
+import { useSetCurrentUser } from '../contexts/UserContext';
+
 
 function Header() {
   const navigate = useNavigate();
+  const setCurrentUser = useSetCurrentUser();
   const currentUser = useCurrentUser();
 
-  function handleLogout() {
+  const handleLogout = () => {
     localStorage.removeItem("authToken");
-    console.log("logged out" + localStorage.getItem("authToken"));
+    setCurrentUser(null); 
     navigate("/login");
-  }
+};
 
   return (
     <Navbar bg="light" expand="lg" className="py-3">

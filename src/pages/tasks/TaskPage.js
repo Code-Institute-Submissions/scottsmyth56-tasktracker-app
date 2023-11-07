@@ -15,6 +15,8 @@ function TaskPage() {
   const currentUser = useCurrentUser();
   const navigate = useNavigate();
 
+  // \console.log("currentUser", currentUser);
+
  
 
   useEffect(() => {

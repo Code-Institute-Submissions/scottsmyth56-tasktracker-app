@@ -40,6 +40,7 @@ function App() {
       </Router>
       <ToastContainer />
     </CurrentUserProvider>
+    
   );
 }
 
