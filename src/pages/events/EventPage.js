@@ -120,10 +120,13 @@ function EventPage() {
   };
 
   return (
-    <Container fluid>
+    <Container fluid className={styles["event-container"]}>
       <Row>
         <Col md={8}>
-          <h1>My Events</h1>
+          <h1 className={styles["white-text-title-large"]}> Events</h1>
+          <Button as={Link} to="/createEvent" className={styles["action-btn"]}>
+            Create Event +
+          </Button>
           <ListGroup>
             {events.map((event) => (
               <ListGroup.Item
@@ -139,7 +142,9 @@ function EventPage() {
                   </div>
                   <div className="text-end">
                     <p className="mb-0">
-                      <small className="text-muted">Date: {format(new Date(event.date), "dd-MM-yyyy")}</small>
+                      <small className="text-muted">
+                        Date: {format(new Date(event.date), "dd-MM-yyyy")}
+                      </small>
                     </p>
                     <p className="mb-0">
                       <small className="text-muted">Time: {event.time}</small>
@@ -149,11 +154,9 @@ function EventPage() {
               </ListGroup.Item>
             ))}
           </ListGroup>
-          <Button as={Link} to="/createEvent" className="mt-3">
-            Create Event +
-          </Button>
+
           <hr />
-          <h1>Accepted Events</h1>
+          <h1 className={styles["white-text-title-large"]}>Accepted Events</h1>
           <ListGroup>
             {acceptedEvents.map((event) => (
               <ListGroup.Item
@@ -182,7 +185,7 @@ function EventPage() {
         </Col>
 
         <Col md={4}>
-          <Card>
+          <Card className="mt-4">
             <Card.Header as="h4">Event Invitations</Card.Header>
             <ListGroup variant="flush">
               {invitations.map((invitation) => (

@@ -9,6 +9,11 @@
 
 body{
     max-width: 100%;
+    
+}
+body, html{
+    margin: 0;
+    padding-bottom: 50px;
 }
 
 .white-text-title{

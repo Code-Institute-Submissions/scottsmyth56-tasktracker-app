@@ -8,6 +8,7 @@ import format from "date-fns/format";
 import styles from "../../styles/TaskPage.module.css";
 import no_results from "../../assets/no_results.png";
 
+
 function TaskPage() {
   const [tasks, setTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
@@ -96,7 +97,7 @@ function TaskPage() {
             <>
               {myFilteredTasks.length > 0 && (
                 <>
-                  <h2 className={styles["filter-label"]}>Your Tasks</h2>
+                  <h2 className={styles["white-text-title-large"]}>Your Tasks</h2>
                   <Table striped bordered hover responsive >
                     <thead style={{backgroundColor:"black"}}>
                       <tr>
@@ -130,7 +131,7 @@ function TaskPage() {
           </Col>
 
           <Col xs={12} lg={4} className="shared-tasks-section">
-            <h2 className={styles["filter-label"]}> Shared Tasks</h2>
+            <h2 className={styles["white-text-title-large"]}> Shared Tasks</h2>
 
             <Table striped bordered hover responsive>
               <thead>
@@ -159,6 +160,7 @@ function TaskPage() {
             </Table>
           </Col>
         </Row>
+
       </Container>
       {/* <Link to="/register">
         <button>Register</button>

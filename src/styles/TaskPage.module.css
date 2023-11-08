@@ -20,3 +20,14 @@
     color: white;
     margin: 5px;
 }
+
+.white-text-title-large{
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 3px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
