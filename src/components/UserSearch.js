@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { axiosRequest } from '../api/axiosDefaults';
 import { ListGroup} from 'react-bootstrap';
 import debounce from 'lodash.debounce';
-
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
 function UserSearch({ onSelectUser }) { 
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,21 +42,30 @@ function UserSearch({ onSelectUser }) {
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Search users..."
-        value={searchTerm}
-        onChange={handleSearchChange}
-      />
+      <InputGroup className="mb-3">
+        <FormControl
+          placeholder="Search users..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+      </InputGroup>
       
       <ListGroup>
         {users.map(user => (
-          <ListGroup.Item key={user.user_id} onClick={() => onSelectUser(user)}>
-            {user.username} {user.user_id}
+          <ListGroup.Item 
+            key={user.user_id} 
+            action
+            onClick={() => onSelectUser(user)}
+            className="d-flex justify-content-between align-items-center"
+          >
+            {user.username}
+            <Button variant="outline-primary" onClick={() => onSelectUser(user)}>
+              Invite to Task
+            </Button>
           </ListGroup.Item>
         ))}
-        {!loading && users.length === 0 && searchTerm && <p>No users found</p>}
       </ListGroup>
+      {!loading && users.length === 0 && searchTerm && <p>No users found</p>}
     </div>
   );
 }
