@@ -1,6 +1,10 @@
 
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
-  
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
 
 body {
   margin: 0;
@@ -12,6 +16,8 @@ body {
   background-image: url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1699461014/media/images/app-background_lsckzs.jpg");
   background-size: cover; 
   background-repeat: no-repeat;
+  background-attachment: fixed;
+
 }
 
 code {

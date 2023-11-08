@@ -13,7 +13,7 @@ import CreateEventForm from "./pages/events/CreateEventForm";
 import EditTask from "./pages/tasks/EditTaskForm";
 import EditEvent from "./pages/events/EditEventForm";
 import { ToastContainer } from 'react-toastify';
-
+<script src="https://kit.fontawesome.com/394cced9ae.js" crossorigin="anonymous"></script>
 
 function App() {
   return (
