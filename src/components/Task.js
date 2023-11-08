@@ -97,6 +97,7 @@ function Task() {
           )}
 
           <ListGroup>
+            <h4>Shared Users:</h4>
             {task.shared_users_usernames.map((username) => (
               <ListGroup.Item key={username}>{username}</ListGroup.Item>
             ))}

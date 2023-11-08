@@ -13,7 +13,9 @@ import CreateEventForm from "./pages/events/CreateEventForm";
 import EditTask from "./pages/tasks/EditTaskForm";
 import EditEvent from "./pages/events/EditEventForm";
 import { ToastContainer } from 'react-toastify';
-
+<link rel="preconnect" href="https://fonts.googleapis.com"></link>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet"></link>
 
 function App() {
   return (
