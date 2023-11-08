@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { axiosRequest } from "../../api/axiosDefaults";
 import { useCurrentUser } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { Container, Row, Col, Table, Button, Form } from "react-bootstrap";
 import format from "date-fns/format";
 import styles from "../../styles/TaskPage.module.css";
+import no_results from "../../assets/no_results.png";
 
 function TaskPage() {
   const [tasks, setTasks] = useState([]);
@@ -61,50 +62,66 @@ function TaskPage() {
       <Container fluid>
         <Row>
           <Col xs={12} lg={8} className="task-list-section">
-            <h1>My Tasks</h1>
+
+
             <div className={styles["filter-div"]}>
               <label>Status:</label>
-              <select onChange={(e) => setStatusFilter(e.target.value)}>
+              <Form.Select onChange={(e) => setStatusFilter(e.target.value)}>
                 <option value="all">All</option>
                 <option value="todo">To Do</option>
                 <option value="inprogress">In Progress</option>
                 <option value="done">Done</option>
-              </select>
+              </Form.Select>
             </div>
+
             <div className={styles["filter-div"]}>
               <label>Priority:</label>
-              <select onChange={(e) => setPriorityFilter(e.target.value)}>
+              <Form.Select onChange={(e) => setPriorityFilter(e.target.value)}>
                 <option value="all">All</option>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
-              </select>
+              </Form.Select>
             </div>
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Due Date</th>
-                  <th>Priority</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {myFilteredTasks.map((task) => (
-                  <tr
-                    key={task.id}
-                    className={getPriorityColor(task.priority)}
-                    onClick={() => handleRowClick(task.id)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <td>{task.title}</td>
-                    <td>{format(new Date(task.due_date), "dd-MM-yyyy")}</td>
-                    <td>{task.priority}</td>
-                    <td>{task.status}</td>
+
+            <Link to="/createTask">
+              <Button className={styles["create-btn"]}>Create Task +</Button>
+            </Link>
+
+            {myFilteredTasks.length === 0 && (
+              <div className={styles["no-tasks-container"]}>
+                <img src={no_results} alt="No tasks" />
+                <h3>No Tasks Found</h3>
+              </div>
+            )}
+
+            {myFilteredTasks.length > 0 && (
+              <Table striped bordered hover responsive>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Due Date</th>
+                    <th>Priority</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {myFilteredTasks.map((task) => (
+                    <tr
+                      key={task.id}
+                      className={getPriorityColor(task.priority)}
+                      onClick={() => handleRowClick(task.id)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <td>{task.title}</td>
+                      <td>{format(new Date(task.due_date), "dd-MM-yyyy")}</td>
+                      <td>{task.priority}</td>
+                      <td>{task.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
           </Col>
 
           <Col xs={12} lg={4} className="shared-tasks-section">
@@ -138,14 +155,9 @@ function TaskPage() {
           </Col>
         </Row>
       </Container>
-      <h1>Task List</h1>
-
-      <Link to="/register">
+      {/* <Link to="/register">
         <button>Register</button>
-      </Link>
-      <Link to="/createTask">
-        <button>Create Task +</button>
-      </Link>
+      </Link> */}
     </div>
   );
 }
