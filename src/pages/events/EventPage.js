@@ -6,7 +6,7 @@ import { useCurrentUser } from "../../contexts/UserContext";
 import { Container, Row, Col, Button, Card, ListGroup } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
-
+import no_results from "../../assets/no_results.png";
 function EventPage() {
   const [events, setEvents] = useState([]);
   const [invitations, setInvitations] = useState([]);
@@ -66,8 +66,6 @@ function EventPage() {
         (invitation) => invitation.id === invitationId
       );
 
-      // console.log("Accepted invitation:", acceptedInvitation);
-
       const eventToAccept = events.find(
         (event) => event.id === acceptedInvitation.event
       );
@@ -120,44 +118,50 @@ function EventPage() {
   };
 
   return (
-    <Container fluid className={styles["event-container"]}>
+    <Container fluid>
       <Row>
         <Col md={8}>
           <h1 className={styles["white-text-title-large"]}> Events</h1>
           <Button as={Link} to="/createEvent" className={styles["action-btn"]}>
             Create Event +
           </Button>
-          <ListGroup>
-            {events.map((event) => (
-              <ListGroup.Item
-                key={event.id}
-                action
-                as={Link}
-                to={`/events/${event.id}`}
-              >
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h5 className="mb-0">{event.title}</h5>
-                    <small className="text-muted">{event.location}</small>
+          <ListGroup className="mb-4">
+            {events.length === 0 ? ( 
+              <div className={styles["no-events-container"]}>
+              <img src={no_results} alt="No tasks" />
+              <h3 className={styles["filter-label"]}>No Events Found</h3>
+            </div>
+            ) : (
+              events.map((event) => (
+                <ListGroup.Item
+                  key={event.id}
+                  action
+                  as={Link}
+                  to={`/events/${event.id}`}
+                >
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h5 className="mb-0">{event.title}</h5>
+                      <small className="text-muted">{event.location}</small>
+                    </div>
+                    <div className="text-end">
+                      <p className="mb-0">
+                        <small className="text-muted">
+                          Date: {format(new Date(event.date), "dd-MM-yyyy")}
+                        </small>
+                      </p>
+                      <p className="mb-0">
+                        <small className="text-muted">Time: {event.time}</small>
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-end">
-                    <p className="mb-0">
-                      <small className="text-muted">
-                        Date: {format(new Date(event.date), "dd-MM-yyyy")}
-                      </small>
-                    </p>
-                    <p className="mb-0">
-                      <small className="text-muted">Time: {event.time}</small>
-                    </p>
-                  </div>
-                </div>
-              </ListGroup.Item>
-            ))}
+                </ListGroup.Item>
+              ))
+            )}
           </ListGroup>
 
-          <hr />
           <h1 className={styles["white-text-title-large"]}>Accepted Events</h1>
-          <ListGroup>
+          <ListGroup className={styles["event-container"]}>
             {acceptedEvents.map((event) => (
               <ListGroup.Item
                 key={event.id}
@@ -188,26 +192,32 @@ function EventPage() {
           <Card className="mt-4">
             <Card.Header as="h4">Event Invitations</Card.Header>
             <ListGroup variant="flush">
-              {invitations.map((invitation) => (
-                <ListGroup.Item key={invitation.id}>
-                  <p>{`${invitation.sender_username} has invited you to ${invitation.event_title}`}</p>
-                  <Button
-                    onClick={() => handleAccept(invitation.id)}
-                    size="sm"
-                    variant="success"
-                    className={styles["invite-btn"]}
-                  >
-                    Accept
-                  </Button>
-                  <Button
-                    onClick={() => handleDecline(invitation.id)}
-                    size="sm"
-                    variant="danger"
-                  >
-                    Decline
-                  </Button>
-                </ListGroup.Item>
-              ))}
+              {invitations.length > 0 ? (
+                invitations.map((invitation) => (
+                  <ListGroup.Item key={invitation.id}>
+                    <p>{`${invitation.sender_username} has invited you to ${invitation.event_title}`}</p>
+                    <Button
+                      onClick={() => handleAccept(invitation.id)}
+                      size="sm"
+                      variant="success"
+                      className={styles["invite-btn"]}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      onClick={() => handleDecline(invitation.id)}
+                      size="sm"
+                      variant="danger"
+                    >
+                      Decline
+                    </Button>
+                  </ListGroup.Item>
+                ))
+              ) : (
+                <Card.Body>
+                  <Card.Text>No event invitations yet.</Card.Text>
+                </Card.Body>
+              )}
             </ListGroup>
           </Card>
         </Col>

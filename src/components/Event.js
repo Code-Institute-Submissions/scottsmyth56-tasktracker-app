@@ -15,6 +15,7 @@ import {
   Container,
   Card,
 } from "react-bootstrap";
+import styles from "../styles/Event.module.css";
 
 function Event() {
   const currentUser = useCurrentUser();
@@ -80,7 +81,7 @@ function Event() {
     <Container className="mt-4">
       <Row>
         <Col md={8}>
-          <Card>
+          <Card className={styles["card-shadow"]}>
             <Card.Body>
               <Card.Title>{event.title}</Card.Title>
               <Card.Text>
@@ -98,7 +99,7 @@ function Event() {
               {isOwner && (
                 <>
                   <Link to={`/editEvent/${event.id}`}>
-                    <Button variant="primary">Edit Event</Button>
+                    <Button variant="primary" className="mx-2">Edit Event</Button>
                   </Link>
                   <DeleteEventModal eventId={eventId} />
                 </>
@@ -123,7 +124,7 @@ function Event() {
 
         {isOwner && (
           <Col md={4} >
-            <Card>
+            <Card className={styles["card-shadow"]}>
               <Card.Body>
                 <Card.Title>Invite Users to Event</Card.Title>
                 <UserSearch onSelectUser={handleUserSelect} />
