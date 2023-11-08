@@ -6,7 +6,15 @@ import DeleteEventModal from "./DeleteEventModal";
 import UserSearch from "./UserSearch";
 import { useCurrentUser } from "../contexts/UserContext";
 import { toast } from "react-toastify";
-
+import {
+  Row,
+  Col,
+  ListGroup,
+  Button,
+  Image,
+  Container,
+  Card,
+} from "react-bootstrap";
 
 function Event() {
   const currentUser = useCurrentUser();
@@ -28,8 +36,6 @@ function Event() {
   }, [eventId]);
 
   const handleUserSelect = (user) => {
-    //console.log("Inviting user to event:", user.username);
-
     const postData = {
       sender: currentUser.pk,
       recipient: user.user_id,
@@ -68,26 +74,65 @@ function Event() {
   if (loading) {
     return <SpinnerButton />;
   }
-
+  console.log(event.accepted_users);
+  const isOwner = currentUser && event.owner_username === currentUser.username;
   return (
-    <div>
-      <p>event owner{event.owner_username}</p>
-      <h1>{event.title}</h1>
-      <p>Description: {event.description}</p>
-      <p>Date: {event.date}</p>
-      <p>Location: {event.location}</p>
-      <p>Time: {event.time}</p>
+    <Container className="mt-4">
+      <Row>
+        <Col md={8}>
+          <Card>
+            <Card.Body>
+              <Card.Title>{event.title}</Card.Title>
+              <Card.Text>
+                <strong>Description:</strong> {event.description}
+              </Card.Text>
+              <Card.Text>
+                <strong>Date:</strong> {event.date}
+              </Card.Text>
+              <Card.Text>
+                <strong>Location:</strong> {event.location}
+              </Card.Text>
+              <Card.Text>
+                <strong>Time:</strong> {event.time}
+              </Card.Text>
+              {isOwner && (
+                <>
+                  <Link to={`/editEvent/${event.id}`}>
+                    <Button variant="primary">Edit Event</Button>
+                  </Link>
+                  <DeleteEventModal eventId={eventId} />
+                </>
+              )}
+            </Card.Body>
+          </Card>
+          <Card className="mt-3 mb-3">
+            <Card.Body>
+              <Card.Title>Accepted Users</Card.Title>
+              {event.accepted_users.length > 0 ? (
+                <ListGroup variant="flush">
+                  {event.accepted_users.map((username, index) => (
+                    <ListGroup.Item key={index}>{username}</ListGroup.Item>
+                  ))}
+                </ListGroup>
+              ) : (
+                <Card.Text>No users have accepted yet.</Card.Text>
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
 
-      <Link to={`/editEvent/${event.id}`}>
-        <button>Edit Event</button>
-      </Link>
-      <DeleteEventModal eventId={eventId} />
-
-      <div>
-        <h3>Invite Users to Event</h3>
-        <UserSearch onSelectUser={handleUserSelect} />
-      </div>
-    </div>
+        {isOwner && (
+          <Col md={4} >
+            <Card>
+              <Card.Body>
+                <Card.Title>Invite Users to Event</Card.Title>
+                <UserSearch onSelectUser={handleUserSelect} />
+              </Card.Body>
+            </Card>
+          </Col>
+        )}
+      </Row>
+    </Container>
   );
 }
 
