@@ -62,10 +62,8 @@ function TaskPage() {
       <Container fluid>
         <Row>
           <Col xs={12} lg={8} className="task-list-section">
-
-
             <div className={styles["filter-div"]}>
-              <label>Status:</label>
+              <label className={styles["filter-label"]}>Status:</label>
               <Form.Select onChange={(e) => setStatusFilter(e.target.value)}>
                 <option value="all">All</option>
                 <option value="todo">To Do</option>
@@ -75,7 +73,7 @@ function TaskPage() {
             </div>
 
             <div className={styles["filter-div"]}>
-              <label>Priority:</label>
+              <label className={styles["filter-label"]}>Priority:</label>
               <Form.Select onChange={(e) => setPriorityFilter(e.target.value)}>
                 <option value="all">All</option>
                 <option value="low">Low</option>
@@ -91,41 +89,48 @@ function TaskPage() {
             {myFilteredTasks.length === 0 && (
               <div className={styles["no-tasks-container"]}>
                 <img src={no_results} alt="No tasks" />
-                <h3>No Tasks Found</h3>
+                <h3 className={styles["filter-label"]}>No Tasks Found</h3>
               </div>
             )}
 
-            {myFilteredTasks.length > 0 && (
-              <Table striped bordered hover responsive>
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Due Date</th>
-                    <th>Priority</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {myFilteredTasks.map((task) => (
-                    <tr
-                      key={task.id}
-                      className={getPriorityColor(task.priority)}
-                      onClick={() => handleRowClick(task.id)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <td>{task.title}</td>
-                      <td>{format(new Date(task.due_date), "dd-MM-yyyy")}</td>
-                      <td>{task.priority}</td>
-                      <td>{task.status}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            )}
+            <>
+              {myFilteredTasks.length > 0 && (
+                <>
+                  <h2 className={styles["filter-label"]}>Your Tasks</h2>
+                  <Table striped bordered hover responsive >
+                    <thead style={{backgroundColor:"black"}}>
+                      <tr>
+                        <th>Title</th>
+                        <th>Due Date</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {myFilteredTasks.map((task) => (
+                        <tr
+                          key={task.id}
+                          className={getPriorityColor(task.priority)}
+                          onClick={() => handleRowClick(task.id)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <td>{task.title}</td>
+                          <td>
+                            {format(new Date(task.due_date), "dd-MM-yyyy")}
+                          </td>
+                          <td>{task.priority}</td>
+                          <td>{task.status}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </>
+              )}
+            </>
           </Col>
 
           <Col xs={12} lg={4} className="shared-tasks-section">
-            <h2>Shared With Me</h2>
+            <h2 className={styles["filter-label"]}> Shared Tasks</h2>
 
             <Table striped bordered hover responsive>
               <thead>
