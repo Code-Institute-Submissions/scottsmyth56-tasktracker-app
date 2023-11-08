@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import DeleteTaskModal from "./DeleteTaskModal";
 import UserSearch from "./UserSearch";
 import { toast } from "react-toastify";
-import { Row, Col, ListGroup, Button, Image } from "react-bootstrap";
+import { Row, Col, ListGroup, Button, Image, Container } from "react-bootstrap";
 import { useCurrentUser } from "../contexts/UserContext";
 import styles from "../styles/Task.module.css";
 import { format } from "date-fns";
@@ -63,57 +63,73 @@ function Task() {
   }
 
   return (
-    <Row>
-      <Col md={8} className="d-flex align-items-center justify-content-center">
-        <div className={styles["shared-users-div"]}>
-          <div className="card">
-            <div className="card-body">
-              <h1 className="card-title">{task.title}</h1>
-              <p className="card-text">Description: {task.description}</p>
-              <p className="card-text">
-                Due Date: {format(new Date(task.due_date), "dd-MM-yyyy")}
-              </p>
-              <p className="card-text">Priority: {task.priority}</p>
-              <p className="card-text">Category: {task.category}</p>
-              <p className="card-text">Status: {task.status}</p>
+    <Container fluid>
+      <Row style={{ maxWidth: "100" }}>
+        <Col
+          md={8}
+          className="d-flex align-items-center justify-content-center"
+        >
+          <div className={styles["shared-users-div"]}>
+            <div className="card">
+              <div className="card-body d-flex">
+                <div className="flex-grow-1">
+                  <h1 className="card-title">{task.title}</h1>
+                  <p className="card-text">Description: {task.description}</p>
+                  <p className="card-text">
+                    Due Date: {format(new Date(task.due_date), "dd-MM-yyyy")}
+                  </p>
+                  <p className="card-text">Priority: {task.priority}</p>
+                  <p className="card-text">Category: {task.category}</p>
+                  <p className="card-text">Status: {task.status}</p>
+                </div>
 
-              {task.image && (
-                <div className="d-flex justify-content-center">
-                  <Image src={task.image} alt="Task" thumbnail />
+                {task.image && (
+                  <div className="ms-3">
+                    <Image
+                      src={task.image}
+                      alt="Task"
+                      thumbnail
+                      className="img-fluid"
+                      style={{ maxHeight: "300px" }}
+                    />
+                  </div>
+                )}
+              </div>
+              {task.owner_username === currentUser.username && (
+                <div className="mt-3">
+                  <Link to={`/editTask/${task.id}`}>
+                    <Button variant="primary" className={styles["action-btn"]}>
+                      Edit Task
+                    </Button>
+                  </Link>
+                  <DeleteTaskModal taskId={taskId} />
                 </div>
               )}
             </div>
           </div>
-        </div>
-      </Col>
+        </Col>
 
-      <Col md={4}>
-        <div className={styles["shared-users-div"]}>
-          {task.owner_username === currentUser.username && (
-            <>
-              <h4>Share Task with Users</h4>
-              <UserSearch onSelectUser={handleUserSelect} />
-            </>
-          )}
+        <Col md={4}>
+          <div className={styles["shared-users-div"]}>
+            {task.owner_username === currentUser.username && (
+              <>
+                <h4 className={styles["white-text-title"]}>
+                  Share Task with Users
+                </h4>
+                <UserSearch onSelectUser={handleUserSelect} />
+              </>
+            )}
 
-          <ListGroup>
-            <h4>Shared Users:</h4>
-            {task.shared_users_usernames.map((username) => (
-              <ListGroup.Item key={username}>{username}</ListGroup.Item>
-            ))}
-          </ListGroup>
-
-          {task.owner_username === currentUser.username && (
-            <div className="mt-3">
-              <Link to={`/editTask/${task.id}`}>
-                <Button variant="primary">Edit Task</Button>
-              </Link>
-              <DeleteTaskModal taskId={taskId} />
-            </div>
-          )}
-        </div>
-      </Col>
-    </Row>
+            <ListGroup>
+              <h4 className={styles["white-text-title"]}> Shared Users:</h4>
+              {task.shared_users_usernames.map((username) => (
+                <ListGroup.Item key={username}>{username}</ListGroup.Item>
+              ))}
+            </ListGroup>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
