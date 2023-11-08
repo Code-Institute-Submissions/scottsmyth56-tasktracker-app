@@ -8,6 +8,8 @@ import UserSearch from "./UserSearch";
 import { toast } from "react-toastify";
 import { Row, Col, ListGroup, Button, Image } from "react-bootstrap";
 import { useCurrentUser } from "../contexts/UserContext";
+import styles from "../styles/Task.module.css";
+import { format } from "date-fns";
 
 function Task() {
   const { taskId } = useParams();
@@ -63,16 +65,18 @@ function Task() {
   return (
     <Row>
       <Col md={8} className="d-flex align-items-center justify-content-center">
-        <div className="text-center">
+        <div className={styles["shared-users-div"]}>
           <div className="card">
             <div className="card-body">
               <h1 className="card-title">{task.title}</h1>
-              <h5 className="card-subtitle mb-2 text-muted">
-                Owner: {task.owner_username}
-              </h5>
               <p className="card-text">Description: {task.description}</p>
-              <p className="card-text">Due Date: {task.due_date}</p>
+              <p className="card-text">
+                Due Date: {format(new Date(task.due_date), "dd-MM-yyyy")}
+              </p>
               <p className="card-text">Priority: {task.priority}</p>
+              <p className="card-text">Category: {task.category}</p>
+              <p className="card-text">Status: {task.status}</p>
+
               {task.image && (
                 <div className="d-flex justify-content-center">
                   <Image src={task.image} alt="Task" thumbnail />
@@ -84,23 +88,29 @@ function Task() {
       </Col>
 
       <Col md={4}>
-        <h4>Share Task with Users</h4>
-        <UserSearch onSelectUser={handleUserSelect} />
-        <h3>Shared Users</h3>
-        <ListGroup>
-          {task.shared_users_usernames.map((username) => (
-            <ListGroup.Item key={username}>{username}</ListGroup.Item>
-          ))}
-        </ListGroup>
+        <div className={styles["shared-users-div"]}>
+          {task.owner_username === currentUser.username && (
+            <>
+              <h4>Share Task with Users</h4>
+              <UserSearch onSelectUser={handleUserSelect} />
+            </>
+          )}
 
-        {task.owner_username === currentUser.username && (
-          <div className="mt-3">
-            <Link to={`/editTask/${task.id}`}>
-              <Button variant="primary">Edit Task</Button>
-            </Link>
-            <DeleteTaskModal taskId={taskId} />
-          </div>
-        )}
+          <ListGroup>
+            {task.shared_users_usernames.map((username) => (
+              <ListGroup.Item key={username}>{username}</ListGroup.Item>
+            ))}
+          </ListGroup>
+
+          {task.owner_username === currentUser.username && (
+            <div className="mt-3">
+              <Link to={`/editTask/${task.id}`}>
+                <Button variant="primary">Edit Task</Button>
+              </Link>
+              <DeleteTaskModal taskId={taskId} />
+            </div>
+          )}
+        </div>
       </Col>
     </Row>
   );

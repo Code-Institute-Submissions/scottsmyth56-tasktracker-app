@@ -44,7 +44,7 @@ function UserSearch({ onSelectUser }) {
     <div>
       <InputGroup className="mb-3">
         <FormControl
-          placeholder="Search users..."
+          placeholder="Search users to share task with...."
           value={searchTerm}
           onChange={handleSearchChange}
         />

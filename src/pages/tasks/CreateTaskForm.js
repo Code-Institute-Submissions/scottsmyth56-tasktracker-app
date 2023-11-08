@@ -36,13 +36,13 @@ const TaskForm = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    for (const key in taskData) {
-      if (key === "image") {
-        formData.append("image", taskData[key]);
-      } else {
-        formData.append(key, taskData[key]);
-      }
+    Object.keys(taskData).forEach(key => {
+    if (key === "image" && taskData[key]) {
+      formData.append("image", taskData[key]);
+    } else if (key !== "image") {
+      formData.append(key, taskData[key]);
     }
+  });
 
     try {
       await axios.post("/tasks/", formData, {

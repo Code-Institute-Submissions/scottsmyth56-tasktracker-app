@@ -5,6 +5,7 @@ import styles from "../../styles/EventPage.module.css";
 import { useCurrentUser } from "../../contexts/UserContext";
 import { Container, Row, Col, Button, Card, ListGroup } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { format } from "date-fns";
 
 function EventPage() {
   const [events, setEvents] = useState([]);
@@ -138,7 +139,7 @@ function EventPage() {
                   </div>
                   <div className="text-end">
                     <p className="mb-0">
-                      <small className="text-muted">Date: {event.date}</small>
+                      <small className="text-muted">Date: {format(new Date(event.date), "dd-MM-yyyy")}</small>
                     </p>
                     <p className="mb-0">
                       <small className="text-muted">Time: {event.time}</small>

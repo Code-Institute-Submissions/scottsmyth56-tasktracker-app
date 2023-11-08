@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { axiosRequest } from "../api/axiosDefaults";
+import { toast } from "react-toastify";
 
 function DeleteEventModal({ eventId }) {
   const [show, setShow] = useState(false);
@@ -14,6 +15,10 @@ function DeleteEventModal({ eventId }) {
     try {
       await axiosRequest.delete(`/events/${eventId}/`);
       navigate("/events");
+      toast.success(`Event deleted successfully`, {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+      });
     } catch (error) {
       console.error("Error deleting Event:", error);
     }
