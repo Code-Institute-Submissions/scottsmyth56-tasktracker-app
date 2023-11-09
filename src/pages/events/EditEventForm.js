@@ -44,7 +44,7 @@ function EditEvent() {
       }
     };
     fetchData();
-  }, [eventId]);
+  }, [eventId,currentUser,navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

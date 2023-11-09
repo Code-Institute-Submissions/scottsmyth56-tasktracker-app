@@ -13,6 +13,7 @@ import CreateEventForm from "./pages/events/CreateEventForm";
 import EditTask from "./pages/tasks/EditTaskForm";
 import EditEvent from "./pages/events/EditEventForm";
 import { ToastContainer } from "react-toastify";
+import NotFoundPage from "./pages/NotFound";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/editTask/:taskId" element={<EditTask />} />
             <Route path="/createEvent" element={<CreateEventForm />} />
             <Route path="/editEvent/:eventId" element={<EditEvent />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>
       </Router>

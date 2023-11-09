@@ -64,7 +64,7 @@ function EditTask() {
       }
     };
     fetchData();
-  }, [taskId]);
+  }, [taskId,currentUser,navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

@@ -6,15 +6,7 @@ import DeleteEventModal from "./DeleteEventModal";
 import UserSearch from "./UserSearch";
 import { useCurrentUser } from "../contexts/UserContext";
 import { toast } from "react-toastify";
-import {
-  Row,
-  Col,
-  ListGroup,
-  Button,
-  Image,
-  Container,
-  Card,
-} from "react-bootstrap";
+import { Row, Col, ListGroup, Button, Container, Card } from "react-bootstrap";
 import styles from "../styles/Event.module.css";
 
 function Event() {

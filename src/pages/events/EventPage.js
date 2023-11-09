@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { axiosRequest } from "../../api/axiosDefaults";
 import styles from "../../styles/EventPage.module.css";
 import { useCurrentUser } from "../../contexts/UserContext";
@@ -12,7 +12,6 @@ function EventPage() {
   const [events, setEvents] = useState([]);
   const [invitations, setInvitations] = useState([]);
   const [acceptedEvents, setAcceptedEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const currentUser = useCurrentUser();
 
@@ -53,17 +52,15 @@ function EventPage() {
         setAcceptedEvents(newAcceptedEvents);
         setEvents(currentUserEvents);
         setInvitations(invitationsData);
-        setIsLoading(false);
       } catch (error) {
         toast.error("An error occurred while fetching data.");
-        setIsLoading(false);
       }
     };
 
     if (currentUser) {
       fetchEventsAndInvitations();
     }
-  }, [currentUser]);
+  }, [currentUser,navigate]);
 
   const handleAccept = async (invitationId) => {
     try {
@@ -110,9 +107,7 @@ function EventPage() {
 
   const handleDecline = async (invitationId) => {
     try {
-      const response = await axiosRequest.delete(
-        `/event-invitations/${invitationId}/`
-      );
+      await axiosRequest.delete(`/event-invitations/${invitationId}/`);
       toast.success("Invitation declined");
 
       setInvitations((currentInvitations) =>

@@ -40,7 +40,7 @@ function Task() {
       .catch((error) => {
         console.error("Error fetching tasks:", error);
       });
-  }, [taskId]);
+  }, [taskId,currentUser,navigate]);
 
   const handleUserSelect = (selectedUser) => {
     if (task.shared_users_usernames.includes(selectedUser.username)) {
