@@ -59,7 +59,6 @@ function Task() {
         shared_users_usernames: updatedUsernames,
       })
       .then((response) => {
-        console.log(response.data);
         setTask(response.data);
         toast.success(
           `${selectedUser.username} has been invited to this event`

@@ -50,14 +50,12 @@ function EventPage() {
             event.accepted_users &&
             event.accepted_users.includes(currentUser.username)
         );
-        console.log(eventsResponse.data);
         setAcceptedEvents(newAcceptedEvents);
         setEvents(currentUserEvents);
         setInvitations(invitationsData);
         setIsLoading(false);
       } catch (error) {
         toast.error("An error occurred while fetching data.");
-        console.log();
         setIsLoading(false);
       }
     };
@@ -128,7 +126,6 @@ function EventPage() {
   };
 
   if (!currentUser) {
-    console.log({ currentUser });
     navigate("/");
   }
 

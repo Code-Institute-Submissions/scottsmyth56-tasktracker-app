@@ -40,7 +40,6 @@ function CreateEvent() {
 
     try {
       await axiosRequest.post("/events/", eventData);
-      console.log("Event data:", eventData);
       navigate("/events");
       toast.success(`Event created sucesfully`, {
         position: toast.POSITION.TOP_CENTER,

@@ -59,8 +59,6 @@ function EditTask() {
           owner_username,
           image,
         });
-
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching task:", error);
       }

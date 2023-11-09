@@ -27,7 +27,6 @@ function Event() {
     axiosRequest
       .get(`/events/${eventId}/`)
       .then((response) => {
-        console.log(response.data);
         setEvent(response.data);
         setLoading(false);
       })
@@ -47,7 +46,6 @@ function Event() {
     axiosRequest
       .post("events/invite/", postData)
       .then((response) => {
-        console.log(response.data);
         toast.success(`${user.username}, has been invited to this event`, {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 5000,
@@ -75,7 +73,6 @@ function Event() {
   if (loading) {
     return <SpinnerButton />;
   }
-  console.log(event.accepted_users);
   const isOwner = currentUser && event.owner_username === currentUser.username;
   return (
     <Container className="mt-4">
@@ -99,7 +96,9 @@ function Event() {
               {isOwner && (
                 <>
                   <Link to={`/editEvent/${event.id}`}>
-                    <Button variant="primary" className="mx-2">Edit Event</Button>
+                    <Button variant="primary" className="mx-2">
+                      Edit Event
+                    </Button>
                   </Link>
                   <DeleteEventModal eventId={eventId} />
                 </>
@@ -123,7 +122,7 @@ function Event() {
         </Col>
 
         {isOwner && (
-          <Col md={4} >
+          <Col md={4}>
             <Card className={styles["card-shadow"]}>
               <Card.Body>
                 <Card.Title>Invite Users to Event</Card.Title>
