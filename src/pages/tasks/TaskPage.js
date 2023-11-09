@@ -159,7 +159,7 @@ function TaskPage() {
               </div>
             )}
 
-            {myFilteredTasks.length > 0 && (
+            {sharedFilteredTasks.length > 0 && (
               <Table striped bordered hover responsive>
                 <thead>
                   <tr>
