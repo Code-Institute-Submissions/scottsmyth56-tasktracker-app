@@ -95,7 +95,10 @@ function LoginForm() {
           </div>
           <p className="mt-3 text-center text-white">
             Don't have an account?{" "}
-            <Link to="/register" className="text-primary">
+            <Link
+              to="/register"
+              style={{ color: "white", textDecoration: "underline" }}
+            >
               Sign up here
             </Link>
           </p>
