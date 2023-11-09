@@ -4,8 +4,8 @@ import axios from "axios";
 import { useCurrentUser } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
-import { toast } from "react-toastify"; 
-
+import { toast } from "react-toastify";
+import { Container, Row, Col } from "react-bootstrap";
 const TaskForm = () => {
   const currentUser = useCurrentUser();
   const history = useNavigate();
@@ -36,13 +36,13 @@ const TaskForm = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    Object.keys(taskData).forEach(key => {
-    if (key === "image" && taskData[key]) {
-      formData.append("image", taskData[key]);
-    } else if (key !== "image") {
-      formData.append(key, taskData[key]);
-    }
-  });
+    Object.keys(taskData).forEach((key) => {
+      if (key === "image" && taskData[key]) {
+        formData.append("image", taskData[key]);
+      } else if (key !== "image") {
+        formData.append(key, taskData[key]);
+      }
+    });
 
     try {
       await axios.post("/tasks/", formData, {
@@ -54,8 +54,8 @@ const TaskForm = () => {
       history("/");
       toast.success(`Task created sucesfully`, {
         position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000
-      })
+        autoClose: 3000,
+      });
     } catch (error) {
       console.error("Error:", error);
       console.log("Task data:", taskData);
@@ -63,101 +63,110 @@ const TaskForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="title">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-          type="text"
-          name="title"
-          value={taskData.title}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+    <Container className="task-form-container">
+      <Row className="justify-content-md-center">
+        <Col xs={12} md={8} lg={6}>
+          <h1 className="text-center text-white mt-3">Create Task</h1>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="title">
+              <Form.Label className="text-white">Title</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                value={taskData.title}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="description">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={3}
-          name="description"
-          value={taskData.description}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+            <Form.Group controlId="description">
+              <Form.Label className="text-white">Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                name="description"
+                value={taskData.description}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="due_date">
-        <Form.Label>Due Date</Form.Label>
-        <Form.Control
-          type="datetime-local"
-          name="due_date"
-          value={taskData.due_date}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+            <Form.Group controlId="due_date">
+              <Form.Label className="text-white">Due Date</Form.Label>
+              <Form.Control
+                type="datetime-local"
+                name="due_date"
+                value={taskData.due_date}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="priority">
-        <Form.Label>Priority</Form.Label>
-        <Form.Control
-          as="select"
-          name="priority"
-          value={taskData.priority}
-          onChange={handleInputChange}
-        >
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-        </Form.Control>
-      </Form.Group>
+            <Form.Group controlId="priority">
+              <Form.Label className="text-white">Priority</Form.Label>
+              <Form.Control
+                as="select"
+                name="priority"
+                value={taskData.priority}
+                onChange={handleInputChange}
+              >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </Form.Control>
+            </Form.Group>
 
-      <Form.Group controlId="category">
-        <Form.Label>Category</Form.Label>
-        <Form.Control
-          type="text"
-          name="category"
-          value={taskData.category}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+            <Form.Group controlId="category">
+              <Form.Label className="text-white">Category</Form.Label>
+              <Form.Control
+                type="text"
+                name="category"
+                value={taskData.category}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="status">
-        <Form.Label>Status</Form.Label>
-        <Form.Control
-          as="select"
-          name="status"
-          value={taskData.status}
-          onChange={handleInputChange}
-        >
-          <option value="todo">To Do</option>
-          <option value="inprogress">In Progress</option>
-          <option value="done">Done</option>
-        </Form.Control>
-      </Form.Group>
+            <Form.Group controlId="status">
+              <Form.Label className="text-white">Status</Form.Label>
+              <Form.Control
+                as="select"
+                name="status"
+                value={taskData.status}
+                onChange={handleInputChange}
+              >
+                <option value="todo">To Do</option>
+                <option value="inprogress">In Progress</option>
+                <option value="done">Done</option>
+              </Form.Control>
+            </Form.Group>
 
-      <Form.Group controlId="owner">
-        <Form.Label>Owner</Form.Label>
-        <Form.Control
-          type="text"
-          name="owner"
-          value={taskData.owner}
-          onChange={handleInputChange}
-          disabled
-        />
-      </Form.Group>
+            <Form.Group controlId="owner">
+              <Form.Label className="text-white">Owner</Form.Label>
+              <Form.Control
+                type="text"
+                name="owner"
+                value={taskData.owner}
+                onChange={handleInputChange}
+                disabled
+              />
+            </Form.Group>
 
-      <Form.Group controlId="image">
-        <Form.Label>Image</Form.Label>
-        <Form.Control
-          type="file"
-          name="image"
-          ref={imageUpload}
-          onChange={handleFileChange}
-        />
-      </Form.Group>
+            <Form.Group controlId="image">
+              <Form.Label className="text-white">Image</Form.Label>
+              <Form.Control
+                type="file"
+                name="image"
+                ref={imageUpload}
+                onChange={handleFileChange}
+              />
+            </Form.Group>
 
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
+            <div className="d-grid gap-2 my-4">
+              <Button variant="primary" type="submit">
+                Create Task
+              </Button>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
