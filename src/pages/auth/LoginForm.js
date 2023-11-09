@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { axiosRequest } from "../../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
 import { useSetCurrentUser } from "../../contexts/UserContext";
-import { Form, Button,Row,Col } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 function LoginForm() {
   const [formData, setFormData] = useState({
     username: "",
@@ -87,10 +88,17 @@ function LoginForm() {
               {errors.password}
             </Form.Control.Feedback>
           </Form.Group>
-
-          <Button variant="primary" type="submit" className="mt-3">
-            Login
-          </Button>
+          <div className="d-grid gap-2 my-4">
+            <Button variant="primary" type="submit" className="mt-3">
+              Login
+            </Button>
+          </div>
+          <p className="mt-3 text-center text-white">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-primary">
+              Sign up here
+            </Link>
+          </p>
         </Form>
       </Col>
     </Row>

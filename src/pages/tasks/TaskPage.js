@@ -162,9 +162,6 @@ function TaskPage() {
         </Row>
 
       </Container>
-      {/* <Link to="/register">
-        <button>Register</button>
-      </Link> */}
     </div>
   );
 }
