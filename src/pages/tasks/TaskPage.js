@@ -153,31 +153,39 @@ function TaskPage() {
           <Col xs={12} lg={4} className="shared-tasks-section">
             <h2 className={styles["white-text-title-large"]}> Shared Tasks</h2>
 
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Due Date</th>
-                  <th>Priority</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sharedFilteredTasks.map((task) => (
-                  <tr
-                    key={task.id}
-                    className={getPriorityColor(task.priority)}
-                    onClick={() => handleRowClick(task.id)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <td>{task.title}</td>
-                    <td>{format(new Date(task.due_date), "dd-MM-yyyy")}</td>
-                    <td>{task.priority}</td>
-                    <td>{task.status}</td>
+            {sharedFilteredTasks.length === 0 && (
+              <div className={styles["no-tasks-container"]}>
+                <p className={"text-white font-weight-bold fs-5"}>No Shared Tasks</p>
+              </div>
+            )}
+
+            {myFilteredTasks.length > 0 && (
+              <Table striped bordered hover responsive>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Due Date</th>
+                    <th>Priority</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {sharedFilteredTasks.map((task) => (
+                    <tr
+                      key={task.id}
+                      className={getPriorityColor(task.priority)}
+                      onClick={() => handleRowClick(task.id)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <td>{task.title}</td>
+                      <td>{format(new Date(task.due_date), "dd-MM-yyyy")}</td>
+                      <td>{task.priority}</td>
+                      <td>{task.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
           </Col>
         </Row>
       </Container>
