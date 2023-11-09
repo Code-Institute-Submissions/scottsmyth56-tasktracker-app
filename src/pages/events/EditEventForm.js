@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { axiosRequest } from "../../api/axiosDefaults";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col, Container } from "react-bootstrap";
 
 function EditEvent() {
   const { eventId } = useParams();
@@ -21,8 +21,8 @@ function EditEvent() {
         setEventData({
           title: response.data.title,
           description: response.data.description,
-          date: response.data.date, 
-          time: response.data.time, 
+          date: response.data.date,
+          time: response.data.time,
           location: response.data.location,
         });
       } catch (error) {
@@ -48,69 +48,81 @@ function EditEvent() {
   };
 
   return (
-    <Form onSubmit={handleEditEvent}>
-      <h1>Edit Event</h1>
+    <Container className="edit-event-container">
+      <Row className="justify-content-center">
+        <Col xs={12} md={6} lg={4}>
+          <Form onSubmit={handleEditEvent}>
+            <h1 className="text-center text-white mt-3">Edit Event</h1>
 
-      <Form.Group controlId="title">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-          type="text"
-          name="title"
-          value={eventData.title}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+            <Form.Group controlId="title">
+              <Form.Label className="text-white">Title</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                value={eventData.title}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="description">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={4}
-          name="description"
-          value={eventData.description}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+            <Form.Group controlId="description">
+              <Form.Label className="text-white">Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={4}
+                name="description"
+                value={eventData.description}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="date">
-        <Form.Label>Date</Form.Label>
-        <Form.Control
-          type="date"
-          name="date"
-          value={eventData.date}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+            <Form.Group controlId="date">
+              <Form.Label className="text-white">Date</Form.Label>
+              <Form.Control
+                type="date"
+                name="date"
+                value={eventData.date}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="time">
-        <Form.Label>Time</Form.Label>
-        <Form.Control
-          type="time"
-          name="time"
-          value={eventData.time}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+            <Form.Group controlId="time">
+              <Form.Label className="text-white">Time</Form.Label>
+              <Form.Control
+                type="time"
+                name="time"
+                value={eventData.time}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="location">
-        <Form.Label>Location</Form.Label>
-        <Form.Control
-          type="text"
-          name="location"
-          value={eventData.location}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
-
-      <Button variant="primary" type="submit">
-        Save Changes
-      </Button>
-      <Link to={`/events/${eventId}`}>
-        <Button variant="secondary" className="ml-2">
-          Cancel
-        </Button>
-      </Link>
-    </Form>
+            <Form.Group controlId="location">
+              <Form.Label className="text-white">Location</Form.Label>
+              <Form.Control
+                type="text"
+                name="location"
+                value={eventData.location}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <div className="d-grid gap-2 my-4">
+              <Button
+                variant="primary"
+                type="submit"
+                size="md"
+                className="d-grid"
+              >
+                Save Changes
+              </Button>
+              <Link to={`/events/${eventId}`} className="d-grid">
+                <Button variant="secondary" size="md" className="d-grid">
+                  Cancel
+                </Button>
+              </Link>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

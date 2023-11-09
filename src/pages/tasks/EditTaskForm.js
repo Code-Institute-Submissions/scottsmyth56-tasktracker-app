@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { axiosRequest } from "../../api/axiosDefaults";
 import SpinnerButton from "../../components/Spinner";
-import { Button, Form, Image } from "react-bootstrap";
+import { Button, Form, Image, Row, Col, Container } from "react-bootstrap";
 
 function EditTask() {
   const { taskId } = useParams();
@@ -89,11 +89,6 @@ function EditTask() {
       navigate(`/tasks/${taskId}`);
     } catch (error) {
       console.error("Error:", error);
-
-      // console.log('loggin Task data:', taskData);
-      // for (let [key, value] of formData.entries()) {
-      //     console.log(key, value);
-      // }
     }
   };
 
@@ -102,109 +97,149 @@ function EditTask() {
   }
 
   return (
-    <Form onSubmit={handleEditTask}>
-      <h1>Edit Task</h1>
-      <Form.Group controlId="title">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-          type="text"
-          name="title"
-          value={taskData.title}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+    <Container className="edit-event-container">
+      <Row className="justify-content-center">
+        <Col xs={12} md={6} lg={4}>
+          
+          <Form onSubmit={handleEditTask}>
+          <h1 className="text-center text-white mt-3">Edit Task</h1>
+            <Form.Group controlId="title">
+              <Form.Label className="text-white">Title</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                value={taskData.title}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="description">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={4}
-          name="description"
-          value={taskData.description}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+            <Form.Group controlId="description">
+              <Form.Label className="text-white">Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={4}
+                name="description"
+                value={taskData.description}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="due_date">
-        <Form.Label>Due Date</Form.Label>
-        <Form.Control
-          type="datetime-local"
-          name="due_date"
-          value={taskData.due_date}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+            <Form.Group controlId="due_date">
+              <Form.Label className="text-white">Due Date</Form.Label>
+              <Form.Control
+                type="datetime-local"
+                name="due_date"
+                value={taskData.due_date}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="priority">
-        <Form.Label>Priority</Form.Label>
-        <Form.Control
-          as="select"
-          name="priority"
-          value={taskData.priority}
-          onChange={handleInputChange}
-        >
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-        </Form.Control>
-      </Form.Group>
+            <Form.Group controlId="priority">
+              <Form.Label className="text-white">Priority</Form.Label>
+              <Form.Control
+                as="select"
+                name="priority"
+                value={taskData.priority}
+                onChange={handleInputChange}
+              >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </Form.Control>
+            </Form.Group>
 
-      <Form.Group controlId="category">
-        <Form.Label>Category</Form.Label>
-        <Form.Control
-          type="text"
-          name="category"
-          value={taskData.category}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
+            <Form.Group controlId="category">
+              <Form.Label className="text-white">Category</Form.Label>
+              <Form.Control
+                type="text"
+                name="category"
+                value={taskData.category}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="status">
-        <Form.Label>Status</Form.Label>
-        <Form.Control
-          as="select"
-          name="status"
-          value={taskData.status}
-          onChange={handleInputChange}
-        >
-          <option value="todo">To Do</option>
-          <option value="inprogress">In Progress</option>
-          <option value="done">Done</option>
-        </Form.Control>
-      </Form.Group>
+            <Form.Group controlId="status">
+              <Form.Label className="text-white">Status</Form.Label>
+              <Form.Control
+                as="select"
+                name="status"
+                value={taskData.status}
+                onChange={handleInputChange}
+              >
+                <option value="todo">To Do</option>
+                <option value="inprogress">In Progress</option>
+                <option value="done">Done</option>
+              </Form.Control>
+            </Form.Group>
 
-      <Form.Group controlId="owner">
-        <Form.Label>Owner</Form.Label>
-        <Form.Control
-          type="text"
-          name="owner"
-          value={taskData.owner_username}
-          onChange={handleInputChange}
-          disabled
-        />
-      </Form.Group>
+            <Form.Group controlId="owner">
+              <Form.Label className="text-white">Owner</Form.Label>
+              <Form.Control
+                type="text"
+                name="owner"
+                value={taskData.owner_username}
+                onChange={handleInputChange}
+                disabled
+              />
+            </Form.Group>
 
-      <Form.Group className="text-center">
-        <Image src={taskData.image} thumbnail />
-        <Form.Label htmlFor="image-upload">Change Image</Form.Label>
-        <Form.Control
-          id="image-upload"
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          ref={imageInput}
-        />
-      </Form.Group>
+            <Form.Group className="text-center mt-3 mb-3">
+              {taskData.image && (
+                <div
+                  className="image-preview mb-3"
+                  style={{ width: "auto", height: "200px" }}
+                >
+                  <Image
+                    src={taskData.image}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain",
+                    }}
+                    thumbnail
+                  />
+                </div>
+              )}
 
-      <Button variant="primary" type="submit">
-        Save Changes
-      </Button>
-      <Link to={`/tasks/${taskId}`}>
-        <Button variant="secondary" className="ml-2">
-          Cancel
-        </Button>
-      </Link>
-    </Form>
+              <div>
+                <Form.Control
+                  id="image-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  ref={imageInput}
+                  style={{ display: "none" }}
+                />
+
+                <Form.Label
+                  htmlFor="image-upload"
+                  className="btn btn-link text-white"
+                  style={{ textDecoration: "none", cursor: "pointer" }}
+                >
+                  Change Image
+                </Form.Label>
+              </div>
+            </Form.Group>
+
+            <div className="d-grid gap-2 my-4">
+              <Button
+                variant="primary"
+                type="submit"
+                size="md"
+                className="d-grid"
+              >
+                Save Changes
+              </Button>
+            <Link to={`/tasks/${taskId}`} className="d-grid">
+              <Button variant="secondary" className="ml-2" size="md">
+                Cancel
+              </Button>
+            </Link>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
