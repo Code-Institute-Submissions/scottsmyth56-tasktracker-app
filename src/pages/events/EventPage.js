@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { axiosRequest } from "../../api/axiosDefaults";
 import styles from "../../styles/EventPage.module.css";
 import { useCurrentUser } from "../../contexts/UserContext";
@@ -7,15 +7,27 @@ import { Container, Row, Col, Button, Card, ListGroup } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
 import no_results from "../../assets/no_results.png";
+import { useNavigate } from "react-router-dom";
 function EventPage() {
   const [events, setEvents] = useState([]);
   const [invitations, setInvitations] = useState([]);
   const [acceptedEvents, setAcceptedEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const navigate = useNavigate();
   const currentUser = useCurrentUser();
 
   useEffect(() => {
+    if (!currentUser) {
+      navigate("/login");
+      const toastId = "unauthorized";
+      if (!toast.isActive(toastId)) {
+        toast.error("You need to be logged in to view events.", {
+          toastId,
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+      return;
+    }
     const fetchEventsAndInvitations = async () => {
       try {
         const [eventsResponse, invitationsResponse] = await Promise.all([
@@ -38,14 +50,14 @@ function EventPage() {
             event.accepted_users &&
             event.accepted_users.includes(currentUser.username)
         );
-
+        console.log(eventsResponse.data);
         setAcceptedEvents(newAcceptedEvents);
         setEvents(currentUserEvents);
         setInvitations(invitationsData);
         setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching data:", error);
         toast.error("An error occurred while fetching data.");
+        console.log();
         setIsLoading(false);
       }
     };
@@ -69,8 +81,6 @@ function EventPage() {
       const eventToAccept = events.find(
         (event) => event.id === acceptedInvitation.event
       );
-
-      console.log("Event accepted:", eventToAccept);
 
       setAcceptedEvents((prevAcceptedEvents) => [
         ...prevAcceptedEvents,
@@ -117,6 +127,11 @@ function EventPage() {
     }
   };
 
+  if (!currentUser) {
+    console.log({ currentUser });
+    navigate("/");
+  }
+
   return (
     <Container fluid>
       <Row>
@@ -126,11 +141,11 @@ function EventPage() {
             Create Event +
           </Button>
           <ListGroup className="mb-4">
-            {events.length === 0 ? ( 
+            {events.length === 0 ? (
               <div className={styles["no-events-container"]}>
-              <img src={no_results} alt="No tasks" />
-              <h3 className={styles["filter-label"]}>No Events Found</h3>
-            </div>
+                <img src={no_results} alt="No tasks" />
+                <h3 className={styles["filter-label"]}>No Events Found</h3>
+              </div>
             ) : (
               events.map((event) => (
                 <ListGroup.Item

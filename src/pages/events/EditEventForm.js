@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { axiosRequest } from "../../api/axiosDefaults";
 import { Form, Button, Row, Col, Container } from "react-bootstrap";
+import { useCurrentUser } from "../../contexts/UserContext";
+import { toast } from "react-toastify";
 
 function EditEvent() {
   const { eventId } = useParams();
   const navigate = useNavigate();
+  const currentUser = useCurrentUser();
   const [eventData, setEventData] = useState({
     title: "",
     description: "",
@@ -15,6 +18,17 @@ function EditEvent() {
   });
 
   useEffect(() => {
+    if (!currentUser) {
+      const toastId = "unauthorized";
+      if (!toast.isActive(toastId)) {
+        toast.error("You need to be logged in to edit an Event.", {
+          toastId,
+          position: toast.POSITION.TOP_CENTER,
+        });
+        navigate("/login");
+      }
+    }
+
     const fetchData = async () => {
       try {
         const response = await axiosRequest.get(`/events/${eventId}/`);

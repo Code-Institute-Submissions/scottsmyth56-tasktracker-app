@@ -3,12 +3,14 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { axiosRequest } from "../../api/axiosDefaults";
 import SpinnerButton from "../../components/Spinner";
 import { Button, Form, Image, Row, Col, Container } from "react-bootstrap";
+import { useCurrentUser } from "../../contexts/UserContext";
+import { toast } from "react-toastify";
 
 function EditTask() {
   const { taskId } = useParams();
   const navigate = useNavigate();
   const imageInput = useRef(null);
-
+  const currentUser = useCurrentUser();
   const [taskData, setTaskData] = useState({
     title: "",
     description: "",
@@ -21,6 +23,17 @@ function EditTask() {
   });
 
   useEffect(() => {
+    if (!currentUser) {
+      const toastId = "unauthorized";
+      if (!toast.isActive(toastId)) {
+        toast.error("You need to be logged in to edit a task.", {
+          toastId,
+          position: toast.POSITION.TOP_CENTER,
+        });
+        navigate("/login");
+      }
+    }
+
     const fetchData = async () => {
       try {
         const response = await axiosRequest.get(`/tasks/${taskId}/`);
@@ -100,9 +113,8 @@ function EditTask() {
     <Container className="edit-event-container">
       <Row className="justify-content-center">
         <Col xs={12} md={6} lg={4}>
-          
           <Form onSubmit={handleEditTask}>
-          <h1 className="text-center text-white mt-3">Edit Task</h1>
+            <h1 className="text-center text-white mt-3">Edit Task</h1>
             <Form.Group controlId="title">
               <Form.Label className="text-white">Title</Form.Label>
               <Form.Control
@@ -237,11 +249,11 @@ function EditTask() {
               >
                 Save Changes
               </Button>
-            <Link to={`/tasks/${taskId}`} className="d-grid">
-              <Button variant="secondary" className="ml-2" size="md">
-                Cancel
-              </Button>
-            </Link>
+              <Link to={`/tasks/${taskId}`} className="d-grid">
+                <Button variant="secondary" className="ml-2" size="md">
+                  Cancel
+                </Button>
+              </Link>
             </div>
           </Form>
         </Col>

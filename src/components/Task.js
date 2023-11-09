@@ -10,14 +10,27 @@ import { Row, Col, ListGroup, Button, Image, Container } from "react-bootstrap";
 import { useCurrentUser } from "../contexts/UserContext";
 import styles from "../styles/Task.module.css";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 function Task() {
   const { taskId } = useParams();
   const [task, setTask] = useState(null);
   const [loading, setLoading] = useState(true);
   const currentUser = useCurrentUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!currentUser) {
+      const toastId = "unauthorized";
+      if (!toast.isActive(toastId)) {
+        toast.error("You need to be logged in to view a task.", {
+          toastId,
+          position: toast.POSITION.TOP_CENTER,
+        });
+        navigate("/login");
+      }
+    }
+
     axiosRequest
       .get(`/tasks/${taskId}/`)
       .then((response) => {

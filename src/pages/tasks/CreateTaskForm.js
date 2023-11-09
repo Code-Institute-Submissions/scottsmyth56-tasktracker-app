@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { useCurrentUser } from "../../contexts/UserContext";
@@ -10,7 +10,7 @@ const TaskForm = () => {
   const currentUser = useCurrentUser();
   const history = useNavigate();
   const imageUpload = useRef(null);
-
+  const navigate = useNavigate();
   const [taskData, setTaskData] = useState({
     title: "",
     description: "",
@@ -18,10 +18,28 @@ const TaskForm = () => {
     priority: "low",
     category: "",
     status: "todo",
-    owner: currentUser.username,
+    owner: "",
     shared_users: [],
     image: null,
   });
+
+  useEffect(() => {
+    if (!currentUser) {
+      const toastId = "unauthorized";
+      if (!toast.isActive(toastId)) {
+        toast.error("You need to be logged in to create a task.", {
+          toastId,
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+      navigate("/login");
+    } else {
+      setTaskData((prevData) => ({
+        ...prevData,
+        owner: currentUser.username,
+      }));
+    }
+  }, [currentUser, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -56,10 +74,7 @@ const TaskForm = () => {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
       });
-    } catch (error) {
-      console.error("Error:", error);
-      console.log("Task data:", taskData);
-    }
+    } catch (error) {}
   };
 
   return (
@@ -73,7 +88,7 @@ const TaskForm = () => {
               <Form.Control
                 type="text"
                 name="title"
-                required 
+                required
                 value={taskData.title}
                 onChange={handleInputChange}
               />

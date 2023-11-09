@@ -12,8 +12,7 @@ import CreateTaskForm from "./pages/tasks/CreateTaskForm";
 import CreateEventForm from "./pages/events/CreateEventForm";
 import EditTask from "./pages/tasks/EditTaskForm";
 import EditEvent from "./pages/events/EditEventForm";
-import { ToastContainer } from 'react-toastify';
-<script src="https://kit.fontawesome.com/394cced9ae.js" crossorigin="anonymous"></script>
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -32,15 +31,11 @@ function App() {
             <Route path="/editTask/:taskId" element={<EditTask />} />
             <Route path="/createEvent" element={<CreateEventForm />} />
             <Route path="/editEvent/:eventId" element={<EditEvent />} />
-
-
           </Routes>
-
         </div>
       </Router>
       <ToastContainer />
     </CurrentUserProvider>
-    
   );
 }
 

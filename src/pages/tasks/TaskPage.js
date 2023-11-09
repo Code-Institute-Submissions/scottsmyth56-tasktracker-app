@@ -7,7 +7,7 @@ import { Container, Row, Col, Table, Button, Form } from "react-bootstrap";
 import format from "date-fns/format";
 import styles from "../../styles/TaskPage.module.css";
 import no_results from "../../assets/no_results.png";
-
+import { toast } from "react-toastify";
 
 function TaskPage() {
   const [tasks, setTasks] = useState([]);
@@ -18,15 +18,33 @@ function TaskPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axiosRequest
-      .get("/tasks/")
-      .then((response) => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axiosRequest.get("/tasks/");
         setTasks(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching tasks:", error);
-      });
-  }, []);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          const toastId = "unauthorized";
+          if (!toast.isActive(toastId)) {
+            toast.error("Please Log In to View Content", {
+              toastId,
+              position: "top-center",
+              autoClose: 5000,
+            });
+          }
+          navigate("/login");
+        } else {
+          console.error("Error fetching tasks:", error);
+          toast.error("An error occurred while fetching tasks.", {
+            position: "top-center",
+          });
+        }
+      }
+    };
+
+    fetchTasks();
+  }, [navigate]);
+
   const myFilteredTasks = tasks.filter(
     (task) =>
       task.owner_username === currentUser?.username &&
@@ -97,9 +115,11 @@ function TaskPage() {
             <>
               {myFilteredTasks.length > 0 && (
                 <>
-                  <h2 className={styles["white-text-title-large"]}>Your Tasks</h2>
-                  <Table striped bordered hover responsive >
-                    <thead style={{backgroundColor:"black"}}>
+                  <h2 className={styles["white-text-title-large"]}>
+                    Your Tasks
+                  </h2>
+                  <Table striped bordered hover responsive>
+                    <thead style={{ backgroundColor: "black" }}>
                       <tr>
                         <th>Title</th>
                         <th>Due Date</th>
@@ -160,7 +180,6 @@ function TaskPage() {
             </Table>
           </Col>
         </Row>
-
       </Container>
     </div>
   );
