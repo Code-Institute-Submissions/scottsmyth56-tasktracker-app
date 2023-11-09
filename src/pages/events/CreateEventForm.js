@@ -48,6 +48,7 @@ function CreateEvent() {
                             <Form.Control
                                 type="text"
                                 name="title"
+                                required
                                 value={eventData.title}
                                 onChange={handleInputChange}
                             />
@@ -59,6 +60,7 @@ function CreateEvent() {
                                 as="textarea"
                                 rows={3}
                                 name="description"
+                                required
                                 value={eventData.description}
                                 onChange={handleInputChange}
                             />
@@ -69,6 +71,7 @@ function CreateEvent() {
                             <Form.Control
                                 type="date"
                                 name="date"
+                                required
                                 value={eventData.date}
                                 onChange={handleInputChange}
                             />
@@ -79,6 +82,7 @@ function CreateEvent() {
                             <Form.Control
                                 type="time"
                                 name="time"
+                                required
                                 value={eventData.time}
                                 onChange={handleInputChange}
                             />
@@ -89,6 +93,7 @@ function CreateEvent() {
                             <Form.Control
                                 type="text"
                                 name="location"
+                                required
                                 value={eventData.location}
                                 onChange={handleInputChange}
                             />

@@ -59,6 +59,7 @@ function EditEvent() {
               <Form.Control
                 type="text"
                 name="title"
+                required
                 value={eventData.title}
                 onChange={handleInputChange}
               />
@@ -70,6 +71,7 @@ function EditEvent() {
                 as="textarea"
                 rows={4}
                 name="description"
+                required
                 value={eventData.description}
                 onChange={handleInputChange}
               />
@@ -79,6 +81,7 @@ function EditEvent() {
               <Form.Label className="text-white">Date</Form.Label>
               <Form.Control
                 type="date"
+                required
                 name="date"
                 value={eventData.date}
                 onChange={handleInputChange}
@@ -89,6 +92,7 @@ function EditEvent() {
               <Form.Label className="text-white">Time</Form.Label>
               <Form.Control
                 type="time"
+                required
                 name="time"
                 value={eventData.time}
                 onChange={handleInputChange}
@@ -99,6 +103,7 @@ function EditEvent() {
               <Form.Label className="text-white">Location</Form.Label>
               <Form.Control
                 type="text"
+                required
                 name="location"
                 value={eventData.location}
                 onChange={handleInputChange}

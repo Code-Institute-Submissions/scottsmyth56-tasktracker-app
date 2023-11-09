@@ -107,6 +107,7 @@ function EditTask() {
               <Form.Label className="text-white">Title</Form.Label>
               <Form.Control
                 type="text"
+                required
                 name="title"
                 value={taskData.title}
                 onChange={handleInputChange}
@@ -118,6 +119,7 @@ function EditTask() {
               <Form.Control
                 as="textarea"
                 rows={4}
+                required
                 name="description"
                 value={taskData.description}
                 onChange={handleInputChange}
@@ -129,6 +131,7 @@ function EditTask() {
               <Form.Control
                 type="datetime-local"
                 name="due_date"
+                required
                 value={taskData.due_date}
                 onChange={handleInputChange}
               />
@@ -139,6 +142,7 @@ function EditTask() {
               <Form.Control
                 as="select"
                 name="priority"
+                required
                 value={taskData.priority}
                 onChange={handleInputChange}
               >
@@ -153,6 +157,7 @@ function EditTask() {
               <Form.Control
                 type="text"
                 name="category"
+                required
                 value={taskData.category}
                 onChange={handleInputChange}
               />
@@ -163,6 +168,7 @@ function EditTask() {
               <Form.Control
                 as="select"
                 name="status"
+                required
                 value={taskData.status}
                 onChange={handleInputChange}
               >
@@ -176,6 +182,7 @@ function EditTask() {
               <Form.Label className="text-white">Owner</Form.Label>
               <Form.Control
                 type="text"
+                required
                 name="owner"
                 value={taskData.owner_username}
                 onChange={handleInputChange}

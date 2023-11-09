@@ -73,6 +73,7 @@ const TaskForm = () => {
               <Form.Control
                 type="text"
                 name="title"
+                required 
                 value={taskData.title}
                 onChange={handleInputChange}
               />
@@ -83,6 +84,7 @@ const TaskForm = () => {
               <Form.Control
                 as="textarea"
                 rows={3}
+                required
                 name="description"
                 value={taskData.description}
                 onChange={handleInputChange}
@@ -94,6 +96,7 @@ const TaskForm = () => {
               <Form.Control
                 type="datetime-local"
                 name="due_date"
+                required
                 value={taskData.due_date}
                 onChange={handleInputChange}
               />
@@ -104,6 +107,7 @@ const TaskForm = () => {
               <Form.Control
                 as="select"
                 name="priority"
+                required
                 value={taskData.priority}
                 onChange={handleInputChange}
               >
@@ -118,6 +122,7 @@ const TaskForm = () => {
               <Form.Control
                 type="text"
                 name="category"
+                required
                 value={taskData.category}
                 onChange={handleInputChange}
               />
@@ -128,6 +133,7 @@ const TaskForm = () => {
               <Form.Control
                 as="select"
                 name="status"
+                required
                 value={taskData.status}
                 onChange={handleInputChange}
               >
@@ -142,6 +148,7 @@ const TaskForm = () => {
               <Form.Control
                 type="text"
                 name="owner"
+                required
                 value={taskData.owner}
                 onChange={handleInputChange}
                 disabled
