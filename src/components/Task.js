@@ -44,9 +44,14 @@ function Task() {
 
   const handleUserSelect = (selectedUser) => {
     if (task.shared_users_usernames.includes(selectedUser.username)) {
-      toast.error(
-        `${selectedUser.username} has already been invited to this task.`
-      );
+      const toastId = "inviteSuccess";
+          if (!toast.isActive(toastId)) {
+            toast.warning(`${selectedUser.username}, has already been invited to this event`, {
+              toastId,
+              position: "top-center",
+              autoClose: 5000,
+            });
+          }
       return;
     }
 
@@ -60,9 +65,14 @@ function Task() {
       })
       .then((response) => {
         setTask(response.data);
-        toast.success(
-          `${selectedUser.username} has been invited to this event`
-        );
+        const toastId = "inviteSuccess";
+          if (!toast.isActive(toastId)) {
+            toast.success(`${selectedUser.username}, has been invited to this event`, {
+              toastId,
+              position: "top-center",
+              autoClose: 5000,
+            });
+          }
       })
       .catch((error) => {
         console.error("Error updating task shared users:", error);

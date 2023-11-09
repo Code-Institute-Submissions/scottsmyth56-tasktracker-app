@@ -70,10 +70,14 @@ const TaskForm = () => {
         },
       });
       history("/");
-      toast.success(`Task created sucesfully`, {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-      });
+      const toastId = "createTaskSuccess";
+          if (!toast.isActive(toastId)) {
+            toast.success("Task Created Succesfully", {
+              toastId,
+              position: "top-center",
+              autoClose: 5000,
+            });
+          }
     } catch (error) {}
   };
 

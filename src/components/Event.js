@@ -38,20 +38,25 @@ function Event() {
     axiosRequest
       .post("events/invite/", postData)
       .then((response) => {
-        toast.success(`${user.username}, has been invited to this event`, {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 5000,
-        });
+        const toastId = "inviteSuccess";
+          if (!toast.isActive(toastId)) {
+            toast.success(`${user.username}, has been invited to this event`, {
+              toastId,
+              position: "top-center",
+              autoClose: 5000,
+            });
+          }
       })
       .catch((error) => {
         if (error.response && error.response.status === 400) {
-          toast.warning(
-            `${user.username}, has already been invited to this event`,
-            {
-              position: toast.POSITION.TOP_CENTER,
+          const toastId = "inviteSuccess";
+          if (!toast.isActive(toastId)) {
+            toast.warning(`${user.username}, has already been invited to this event`, {
+              toastId,
+              position: "top-center",
               autoClose: 5000,
-            }
-          );
+            });
+          }
         } else {
           console.error("Error inviting user:", error);
           toast.error(`Error inviting ${user.username} please try again!`, {

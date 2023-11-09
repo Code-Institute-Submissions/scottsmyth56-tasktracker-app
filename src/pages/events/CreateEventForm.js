@@ -41,10 +41,15 @@ function CreateEvent() {
     try {
       await axiosRequest.post("/events/", eventData);
       navigate("/events");
-      toast.success(`Event created sucesfully`, {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-      });
+      const toastId = "createEventSuccess";
+          if (!toast.isActive(toastId)) {
+            toast.success("Event Created Succesfully", {
+              toastId,
+              position: "top-center",
+              autoClose: 5000,
+            });
+          }
+      
     } catch (error) {
       console.error("Error:", error);
     }
