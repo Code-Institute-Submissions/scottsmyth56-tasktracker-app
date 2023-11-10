@@ -1,9 +1,9 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { axiosRequest } from "../../api/axiosDefaults";
 import { toast } from "react-toastify";
-
+import { Link } from "react-router-dom";
 function RegisterForm() {
   const [formData, setFormData] = useState({
     username: "",
@@ -123,6 +123,11 @@ function RegisterForm() {
             >
               Save Changes
             </Button>
+            <Link to="/login" className="d-grid">
+              <Button variant="secondary" size="md"style={{textDecoration:"none"}}>
+                Back to Login
+              </Button>
+            </Link>
           </div>
         </Form>
       </Col>
