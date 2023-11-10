@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { axiosRequest } from "../api/axiosDefaults";
 import SpinnerButton from "./Spinner";
@@ -37,7 +37,7 @@ function Event() {
 
     axiosRequest
       .post("events/invite/", postData)
-      .then((response) => {
+      .then(() => {
         const toastId = "inviteSuccess";
           if (!toast.isActive(toastId)) {
             toast.success(`${user.username}, has been invited to this event`, {

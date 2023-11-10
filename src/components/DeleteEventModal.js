@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { axiosRequest } from "../api/axiosDefaults";
 import { toast } from "react-toastify";
+import PropTypes from "prop-types";
 
 function DeleteEventModal({ eventId }) {
   const [show, setShow] = useState(false);
@@ -22,6 +23,9 @@ function DeleteEventModal({ eventId }) {
     } catch (error) {
       console.error("Error deleting Event:", error);
     }
+  };
+  DeleteEventModal.propTypes = {
+    eventId: PropTypes.number.isRequired,
   };
 
   return (

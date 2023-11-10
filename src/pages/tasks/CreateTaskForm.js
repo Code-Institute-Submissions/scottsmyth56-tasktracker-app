@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { useCurrentUser } from "../../contexts/UserContext";
@@ -71,14 +71,16 @@ const TaskForm = () => {
       });
       history("/");
       const toastId = "createTaskSuccess";
-          if (!toast.isActive(toastId)) {
-            toast.success("Task Created Succesfully", {
-              toastId,
-              position: "top-center",
-              autoClose: 5000,
-            });
-          }
-    } catch (error) {}
+      if (!toast.isActive(toastId)) {
+        toast.success("Task Created Succesfully", {
+          toastId,
+          position: "top-center",
+          autoClose: 5000,
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (

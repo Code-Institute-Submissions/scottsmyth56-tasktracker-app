@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { axiosRequest } from '../api/axiosDefaults';
 import { ListGroup} from 'react-bootstrap';
 import debounce from 'lodash.debounce';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 function UserSearch({ onSelectUser }) { 
   const [searchTerm, setSearchTerm] = useState('');
@@ -38,6 +39,9 @@ function UserSearch({ onSelectUser }) {
     const search = e.target.value;
     setSearchTerm(search);
     debouncedFetchUsers(search);
+  };
+  UserSearch.propTypes = {
+    onSelectUser: PropTypes.func.isRequired
   };
 
   return (

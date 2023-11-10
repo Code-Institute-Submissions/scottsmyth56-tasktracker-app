@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { axiosRequest } from "../../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
 import { useSetCurrentUser } from "../../contexts/UserContext";
@@ -94,7 +94,7 @@ function LoginForm() {
             </Button>
           </div>
           <p className="mt-3 text-center text-white">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               to="/register"
               style={{ color: "white", textDecoration: "underline" }}

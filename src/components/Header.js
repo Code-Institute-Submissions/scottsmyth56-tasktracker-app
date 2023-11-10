@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUser } from "../contexts/UserContext";
 import { Navbar, Nav, Button, Container } from "react-bootstrap";
@@ -24,7 +23,7 @@ function Header() {
             onClick={() => navigate("/")}
             style={{ color: "white", fontSize: 25 }}
           >
-            <i class="fa-solid fa-list-check"></i> Task Tracker
+            <i className="fa-solid fa-list-check"></i> Task Tracker
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

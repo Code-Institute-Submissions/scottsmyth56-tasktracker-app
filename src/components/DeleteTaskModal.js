@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { axiosRequest } from "../api/axiosDefaults";
 import { toast } from "react-toastify";
+import PropTypes from "prop-types";
 
 function DeleteTaskModal({ taskId }) {
   const [show, setShow] = useState(false);
@@ -24,6 +25,9 @@ function DeleteTaskModal({ taskId }) {
     }
   };
 
+  DeleteTaskModal.propTypes = {
+    taskId: PropTypes.number.isRequired,
+  };
   return (
     <>
       <Button variant="danger" onClick={handleShow}>

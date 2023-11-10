@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { axiosRequest } from "../../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
@@ -42,14 +42,13 @@ function CreateEvent() {
       await axiosRequest.post("/events/", eventData);
       navigate("/events");
       const toastId = "createEventSuccess";
-          if (!toast.isActive(toastId)) {
-            toast.success("Event Created Succesfully", {
-              toastId,
-              position: "top-center",
-              autoClose: 5000,
-            });
-          }
-      
+      if (!toast.isActive(toastId)) {
+        toast.success("Event Created Succesfully", {
+          toastId,
+          position: "top-center",
+          autoClose: 5000,
+        });
+      }
     } catch (error) {
       console.error("Error:", error);
     }

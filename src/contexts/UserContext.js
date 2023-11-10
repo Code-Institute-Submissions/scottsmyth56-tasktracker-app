@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { axiosRequest } from "../api/axiosDefaults";
+import PropTypes from "prop-types";
 
 export const CurrentUserContext = createContext();
 export const SetCurrentUserContext = createContext();
@@ -29,6 +30,9 @@ export const CurrentUserProvider = ({ children }) => {
     handleMount();
   }, [localStorage.getItem('authToken')]);
 
+  CurrentUserProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <SetCurrentUserContext.Provider value={setCurrentUser}>
